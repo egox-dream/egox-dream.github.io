@@ -1,0 +1,49 @@
+EgoX embodiment visualizations
+=============================
+
+These posed visualization models derive from the approved EgoX Blender figures.
+The web copies are static glTF 2.0 geometry with Draco compression. Body axes
+are aligned to the EgoX convention, models retain meter units, and each asset is
+centered and grounded for an independent orbit viewer. Left end-effectors are
+purple; right end-effectors are orange. The simulation G1 retains its blue body.
+CAD components may be simplified for browser rendering. Model dimensions,
+display poses, inferred adapters, and the schematic human are illustrations,
+not replacement robot descriptions or mechanical calibration data.
+
+Sources and retained notices
+----------------------------
+
+Human-Dex5: custom schematic EgoX human visualization, with the approved
+enlarged hand display and no camera-marker ball.
+
+G1-Dex5 and G1-Sim-Dex3: local EgoX G1 robot and end-effector mesh bundles.
+The G1 source documentation attributes the body to Unitree's G1 description:
+https://github.com/unitreerobotics/unitree_ros/blob/master/robots/g1_description/g1_29dof_with_hand_rev_1_0.urdf
+Real G1 uses the local Inspire F1 hands; simulated G1 uses the three-finger hand.
+No asset-specific license was found in the local G1/Inspire F1 bundles.
+
+xArm7-Dex4: local EgoX xArm7 description and LEAP hand geometry. The LEAP
+notice credits Ananye Agarwal (2023) and documents later dex_urdf modifications.
+Retained notice: licenses/LEAP-MIT.txt
+No asset-specific license was found in the local xArm7 body mesh bundle.
+
+LocoMan-Dex2: local EgoX Go1-based LocoMan mesh bundle; approved right-reaching,
+left-folded illustration. No asset-specific license was found in that bundle.
+
+R1Lite-Gripper: OpenGalaxea/GalaxeaManipSim R1 Lite assets, pinned at commit
+abe7f5161eeaa150e6eaffdf443af5df7f23f356:
+https://github.com/OpenGalaxea/GalaxeaManipSim/tree/abe7f5161eeaa150e6eaffdf443af5df7f23f356/galaxea_sim/assets/r1_lite/
+Retained repository Apache-2.0 notice: licenses/R1Lite-Apache-2.0.txt
+
+Z1-Tool: Unitree Z1 robot-description geometry, pinned at commit
+ccfc6fd8430a17ba3dacef9a1e2faf64ff3b0aee:
+https://github.com/unitreerobotics/unitree_ros/tree/ccfc6fd8430a17ba3dacef9a1e2faf64ff3b0aee/robots/z1_description
+Retained repository BSD-3-Clause notice: licenses/Z1-Unitree-BSD-3-Clause.txt
+The scoop is user-supplied scoop_1.STEP CAD. Its U bracket and fasteners are
+visual approximations based on the supplied robot photos. These custom parts
+are not assigned the manufacturer repository's license. The web model uses the
+approved corrected terminal mounting and START_MANIPULATION reset pose.
+
+No license is invented for a locally unlabelled asset, and neighboring code's
+license is not automatically assigned to a mesh. Keep these original notices
+and provenance with copies of the distributed visualizations.

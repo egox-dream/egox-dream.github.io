@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "units": "meters",
+  "models": [
+    {
+      "id": "human-dex5",
+      "name": "Human-Dex5",
+      "src": "human-dex5.glb",
+      "poster": "human-dex5.png",
+      "bytes": 211604,
+      "triangles": 48640,
+      "dimensions_m": [
+        0.6749422550201416,
+        0.6083755493164062,
+        1.75
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    },
+    {
+      "id": "g1-dex5",
+      "name": "G1-Dex5",
+      "src": "g1-dex5.glb",
+      "poster": "g1-dex5.png",
+      "bytes": 4847848,
+      "triangles": 466161,
+      "dimensions_m": [
+        0.5001144409179688,
+        0.44667530059814453,
+        1.3095464706420898
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    },
+    {
+      "id": "xarm7-dex4",
+      "name": "xArm7-Dex4",
+      "src": "xarm7-dex4.glb",
+      "poster": "xarm7-dex4.png",
+      "bytes": 1831320,
+      "triangles": 217390,
+      "dimensions_m": [
+        0.6288547515869141,
+        0.2757723927497864,
+        0.605798602104187
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    },
+    {
+      "id": "g1-sim-dex3",
+      "name": "G1-Sim-Dex3",
+      "src": "g1-sim-dex3.glb",
+      "poster": "g1-sim-dex3.png",
+      "bytes": 4179124,
+      "triangles": 414598,
+      "dimensions_m": [
+        0.4652335047721863,
+        0.45203691720962524,
+        1.3095464706420898
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    },
+    {
+      "id": "locoman-dex2",
+      "name": "LocoMan-Dex2",
+      "src": "locoman-dex2.glb",
+      "poster": "locoman-dex2.png",
+      "bytes": 776648,
+      "triangles": 171404,
+      "dimensions_m": [
+        0.9659504890441895,
+        0.3579288721084595,
+        0.3599790334701538
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    },
+    {
+      "id": "r1lite-gripper",
+      "name": "R1Lite-Gripper",
+      "src": "r1lite-gripper.glb",
+      "poster": "r1lite-gripper.png",
+      "bytes": 1295560,
+      "triangles": 138815,
+      "dimensions_m": [
+        0.7869511842727661,
+        0.8250089883804321,
+        1.4001708030700684
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    },
+    {
+      "id": "z1-tool",
+      "name": "Z1-Tool",
+      "src": "z1-tool.glb",
+      "poster": "z1-tool.png",
+      "bytes": 2156208,
+      "triangles": 219468,
+      "dimensions_m": [
+        0.4718130826950073,
+        0.2852882146835327,
+        0.5056049227714539
+      ],
+      "camera_orbit": "31.50deg 66.25deg auto"
+    }
+  ]
+}

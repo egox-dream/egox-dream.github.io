@@ -1,0 +1,186 @@
+/* One shared, borderless model lineup also serves as the video filter. */
+.embodiment-explorer {
+  margin: 28px 0 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.embodiment-explorer [hidden] { display: none !important; }
+.explorer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.explorer-heading h2 { margin: 0 0 6px; font: 600 16px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.explorer-heading p { margin: 0; color: #76766e; font-size: 12px; line-height: 1.6; }
+.explorer-actions { display: flex; align-items: center; flex-shrink: 0; gap: 20px; }
+.explorer-legend { display: flex; gap: 12px; }
+.explorer-legend span { display: inline-flex; align-items: center; gap: 5px; color: #76766e; font-size: 11px; }
+.explorer-legend i { display: block; width: 7px; height: 7px; border-radius: 50%; }
+.explorer-legend .ee-left { background: #8b5cf6; }
+.explorer-legend .ee-right { background: #e76f28; }
+.embodiment-show-all, .explorer-view-controls button {
+  appearance: none;
+  min-height: 36px;
+  padding: 6px 11px;
+  border: 1px solid #dcdcd4;
+  border-radius: 5px;
+  background: transparent;
+  color: #62625a;
+  font: 500 11px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  cursor: pointer;
+}
+.embodiment-show-all[aria-pressed="true"] { background: #eeeee7; border-color: #d4d4ca; color: #33332e; }
+.embodiment-show-all:hover, .explorer-view-controls button:hover { background: #eeeee7; }
+.embodiment-model-grid {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 10px 8px 12px;
+  border: 1px solid #c7c5b7;
+  border-bottom-width: 3px;
+  background: #f5f4ef;
+  scrollbar-width: thin;
+  scrollbar-color: #c8c8be transparent;
+}
+.embodiment-model-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+  min-width: 88px;
+  padding: 0 0 8px;
+  border-bottom: 2px solid transparent;
+  transition: background-color .2s ease;
+}
+.embodiment-model-card[data-selected="true"] { border-bottom-color: #75786a; background: #e8e8dc33; }
+.embodiment-select {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+.embodiment-model-card:has(.embodiment-select:hover) { background: #e8e8dc44; }
+.embodiment-model-stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.embodiment-explorer .embodiment-model-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  object-fit: contain;
+  object-position: center bottom;
+  /* Keep silhouettes legible when the CAD previews are thumbnail-sized. */
+  filter: drop-shadow(.3px 0 #676b64) drop-shadow(-.3px 0 #676b64) drop-shadow(0 .3px #676b64);
+}
+.embodiment-model-card h3 {
+  position: relative;
+  order: -1;
+  margin: 0 1px;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #717168;
+  font: 400 10px/1.45 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+.embodiment-model-card[data-selected="true"] h3 { color: #303329; font-weight: 600; }
+.embodiment-enlarge {
+  position: absolute;
+  z-index: 3;
+  top: 24px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #d4d3c8;
+  border-radius: 4px;
+  background: #f5f4efed;
+  color: #696c60;
+  cursor: pointer;
+}
+.embodiment-enlarge svg { display: block; width: 18px; height: 18px; fill: currentColor; pointer-events: none; }
+.embodiment-enlarge:hover { background: #e8e8dc; color: #303329; }
+html.embodiment-dialog-open { overflow: hidden; scrollbar-gutter: stable; }
+.embodiment-dialog {
+  box-sizing: border-box;
+  width: min(1120px, calc(100vw - 40px));
+  height: min(920px, calc(100dvh - 40px));
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid #c7c5b7;
+  border-radius: 8px;
+  background: #f5f4ef;
+  color: #303329;
+  box-shadow: 0 24px 80px #181a1933;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.embodiment-dialog:not([open]) { display: none; }
+.embodiment-dialog[open] { display: flex; flex-direction: column; }
+.embodiment-dialog::backdrop { background: #23272099; backdrop-filter: blur(3px); }
+.embodiment-dialog-header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 12px; padding: 20px 24px; border-bottom: 1px solid #deddd2; }
+.embodiment-dialog-header h2 { margin: 0 0 6px; font: 600 20px/1.3 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.embodiment-dialog-header p { margin: 0; color: #76766e; font-size: 12px; line-height: 1.5; }
+.embodiment-dialog-close { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #d4d3c8; border-radius: 50%; background: transparent; color: #62625a; font: 28px/1 sans-serif; cursor: pointer; }
+.embodiment-dialog-close:hover { background: #e8e8dc; }
+.embodiment-dialog-stage { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.embodiment-explorer .embodiment-dialog-poster { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 20px; border: 0; border-radius: 0; object-fit: contain; filter: drop-shadow(.3px 0 #676b64) drop-shadow(-.3px 0 #676b64) drop-shadow(0 .3px #676b64); }
+.embodiment-dialog-stage model-viewer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: transparent;
+  touch-action: pan-y;
+  filter: drop-shadow(.35px 0 #676b64) drop-shadow(-.35px 0 #676b64) drop-shadow(0 .35px #676b64);
+  --poster-color: transparent;
+  --progress-bar-color: #828b74;
+  --progress-bar-height: 0;
+  --progress-mask: transparent;
+}
+.embodiment-dialog[data-state="ready"] model-viewer { opacity: 1; }
+.embodiment-dialog[data-state="ready"] .embodiment-dialog-poster { visibility: hidden; }
+.explorer-view-controls { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 12px; min-height: 64px; padding: 12px 24px; border-top: 1px solid #deddd2; }
+.explorer-view-controls > div { display: flex; gap: 8px; flex-shrink: 0; }
+.embodiment-model-status { margin: 0; color: #76766e; font-size: 11px; line-height: 1.6; }
+.embodiment-dialog[data-state="error"] .embodiment-model-status { color: #944937; }
+.embodiment-select:focus-visible, .embodiment-show-all:focus-visible, .embodiment-enlarge:focus-visible, .embodiment-dialog-close:focus-visible, .explorer-view-controls button:focus-visible, .embodiment-dialog-stage model-viewer[data-keyboard-focus="true"]:focus-within { outline: 2px solid #687d8e; outline-offset: -2px; }
+.explorer-noscript { color: #76766e; font-size: 12px; }
+@media (max-width: 760px) {
+  .explorer-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .explorer-actions { justify-content: space-between; width: 100%; }
+  .embodiment-model-card { flex: 1 0 104px; }
+  .embodiment-enlarge { width: 28px; height: 28px; }
+  .embodiment-dialog { width: calc(100vw - 24px); height: calc(100dvh - 24px); }
+  .embodiment-dialog-header { padding: 16px; }
+  .embodiment-dialog-header h2 { font-size: 18px; }
+  .explorer-view-controls { padding: 10px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .embodiment-model-card, .embodiment-model-stage { transition: none; }
+}

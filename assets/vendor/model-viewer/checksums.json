@@ -1,0 +1,38 @@
+{
+  "model_viewer_version": "4.3.1",
+  "draco_version": "1.5.6",
+  "files": {
+    "LICENSE": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "README.txt": {
+      "bytes": 2303,
+      "sha256": "503b78ef2f14cf9b5f99d4c28fe447fabeb082c3729eabe9cd9e1a5544a9e625"
+    },
+    "THIRD_PARTY_LICENSES.txt": {
+      "bytes": 11393,
+      "sha256": "b65cc504b13f431996d9168f3ef9ed838f3abea00e6b22f23b42066b576bec8e"
+    },
+    "draco/LICENSE": {
+      "bytes": 13898,
+      "sha256": "d3709b0fb4b8a94bbb1d02b8a2e484f258b0d9c5c5a01f940391f3fe662cd1a4"
+    },
+    "draco/draco_decoder.js": {
+      "bytes": 719410,
+      "sha256": "30e4d486fa020737af10e3c56197693e5b904bdc05b8bfa5d7b06751dec6da04"
+    },
+    "draco/draco_decoder.wasm": {
+      "bytes": 285747,
+      "sha256": "c55a594e8ffd18426d36b27fea9618af3df5e173640a3e56d46f09d76f0574f2"
+    },
+    "draco/draco_wasm_wrapper.js": {
+      "bytes": 58763,
+      "sha256": "e8049906ef3f8f75d3456c22a3f31bfdfe5b5b5bd09ccdec613b9e9a49d554d8"
+    },
+    "model-viewer.min.js": {
+      "bytes": 1068903,
+      "sha256": "283b0672384614b4847636c306fc93fe4b1fcadc76d668b4e47f0ca76bcf033b"
+    }
+  }
+}

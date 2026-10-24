@@ -1,0 +1,98 @@
+{
+  "style": "technical",
+  "resolution": [
+    1024,
+    1024
+  ],
+  "models": [
+    {
+      "id": "g1-dex5",
+      "src": "g1-dex5.png",
+      "size": 519550,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "g1-dex5.webp",
+      "webp_bytes": 83432
+    },
+    {
+      "id": "g1-sim-dex3",
+      "src": "g1-sim-dex3.png",
+      "size": 519214,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "g1-sim-dex3.webp",
+      "webp_bytes": 85068
+    },
+    {
+      "id": "human-dex5",
+      "src": "human-dex5.png",
+      "size": 466153,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "human-dex5.webp",
+      "webp_bytes": 65562
+    },
+    {
+      "id": "locoman-dex2",
+      "src": "locoman-dex2.png",
+      "size": 456841,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "locoman-dex2.webp",
+      "webp_bytes": 80204
+    },
+    {
+      "id": "r1lite-gripper",
+      "src": "r1lite-gripper.png",
+      "size": 538005,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "r1lite-gripper.webp",
+      "webp_bytes": 92092
+    },
+    {
+      "id": "xarm7-dex4",
+      "src": "xarm7-dex4.png",
+      "size": 590589,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "xarm7-dex4.webp",
+      "webp_bytes": 113084
+    },
+    {
+      "id": "z1-tool",
+      "src": "z1-tool.png",
+      "size": 509997,
+      "resolution": [
+        1024,
+        1024
+      ],
+      "rgba": true,
+      "webp": "z1-tool.webp",
+      "webp_bytes": 85104
+    }
+  ],
+  "delivery_resolution": [
+    768,
+    768
+  ],
+  "delivery_total_bytes": 604546
+}

@@ -1,0 +1,1547 @@
+/* CSS styles for the article */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto+Mono:wght@300;700&display=swap');
+
+body {
+  background-color: #fffefa;
+  font-family: 'Playfair Display', serif;
+  color: #1b1b1b;
+  padding: 60px 30px;
+}
+
+.toc {
+  width: 180px;
+  font-family: 'Roboto Mono', monospace;
+  position: fixed;
+  top: 250px;
+  /* Hide TOC by default */
+  display: none; 
+  /* left: max(30px, calc(25vw - 330px)); */ /* Move left positioning into media query */
+  z-index: 1000; /* Add a high z-index to ensure TOC stays on top */
+}
+
+/* Media Query: Apply styles only when viewport width is 1300px or wider */
+@media (min-width: 1400px) {
+  .toc {
+    /* Show the TOC */
+    display: block; 
+    /* Apply the calculated left position */
+    left: max(30px, calc(25vw - 330px)); 
+  }
+}
+
+.toc h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.toc hr {
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 15px;
+}
+
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  margin-bottom: 10px;
+}
+
+.toc a {
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+}
+
+.toc a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.main-content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.hero-text {
+  /* font-family: 'Roboto Mono', monospace; */
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.sub-hero-text {
+  /* font-family: 'Roboto Mono', monospace; */
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 50px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* New style for authors */
+.authors {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.8;
+  margin-top: -32.5px;
+  margin-bottom: 17.5px;
+  text-align: center;
+}
+.authors span { /* Style for affiliation/notes */
+    display: block; /* Put affiliation/note on new line */
+    font-size: 14px;
+    color: #555;
+    margin-top: 0px;
+}
+/* Style for the affiliation specifically */
+.authors .affiliation {
+    /* Change from bold to a higher numeric weight */
+    /* font-weight: bold; */ 
+    /* Set font-weight to 700 (standard bold) */
+    font-weight: 600;  
+    font-size: 16px;   
+    color: #111;      
+}
+/* Each name moves to the next line as a whole (overrides .authors span) */
+.authors .name {
+    display: inline-block;
+    font-size: inherit;
+    color: inherit;
+}
+.authors .institutions {
+    margin-top: 4px;
+}
+.authors .institutions .name {
+    margin: 0 0.5em;
+}
+/* Style for links within the authors block */
+.authors a {
+    color: inherit; /* Inherit the color from the .authors class */
+    text-decoration: none; /* Remove default underline */
+}
+.authors a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+/* End new style */
+
+.tagline {
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  font-size: 28px;
+  background: none;
+  color: #000;
+  display: block;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+img {
+  width: 100%;
+  /* Update border: set width (e.g., 4px), style (solid), color (#000) */
+  /* border: 0cm solid #000; */
+  border: 1.5px solid #000; 
+  /* Add border-radius for rounded corners */
+  border-radius: 15px; 
+  margin: 0px 20px; /* Keep global rule if needed elsewhere */
+  /* Ensure images behave correctly with border-box sizing */
+  box-sizing: border-box; 
+}
+
+/* Override for images directly within .main-content that need to align */
+.main-content > img {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* General style for the specific image links */
+a#figure-1-img,
+a#figure-2-img,
+a#figure-3-img {
+  display: block; /* Ensures proper layout and application of margins */
+  text-decoration: none; /* Removes hyperlink underline */
+  cursor: default; /* Makes it not look like a clickable link */
+  /* margin-top is already set in their specific ID rules below */
+}
+
+/* Ensure images within these links take full width and are block */
+a#figure-1-img img,
+a#figure-2-img img,
+a#figure-3-img img {
+  display: block; /* Removes extra space below if image were inline */
+  width: 100%;    /* Makes image fill the link's width */
+  height: auto;   /* Maintains aspect ratio */
+  /* General img border styles will apply unless overridden below */
+}
+
+/* Style for Figure 1 (figs/2-min.png) link container */
+#figure-1-img {
+  margin-top: 20px; /* Consistent top margin */
+  margin-left: -25px; /* Override global img margin */
+  margin-right: 18px; /* Override global img margin */
+}
+
+/* Style for Figure 2 (figs/4.png) link container */
+#figure-2-img {
+  /* border: none; */ /* Remove border from the link itself */
+  border-radius: 0; /* Match the link's border-radius removal */
+  margin-left: -25px; /* Override global img margin */
+  margin-right: 17.5px; /* Override global img margin */
+  margin-top: 20px; /* Consistent top margin */
+}
+
+/* Specific border handling for image inside #figure-2-img link */
+a#figure-2-img img {
+  border: none; /* Ensure the image inside the borderless link is also borderless */
+  border-radius: 0; /* Match the link's border-radius removal */
+}
+
+/* Style for Figure 3 (figs/3.png) link container */
+#figure-3-img {
+  width: 60%;
+  padding-left: 15px;
+  background-color: #fff;
+  margin-top: 28px;
+  margin: 20px auto;
+  /* The image inside will get the default border from global img styles */
+  border: 1.5px solid #000; /* Add border to the <a> tag */
+  border-radius: 15px;    /* Add border-radius to the <a> tag */
+  box-sizing: border-box; /* Ensure padding and border are within the element's width */
+  overflow: hidden; /* Clip child elements (the img) to the rounded corners */
+}
+
+/* Specific style for the image inside #figure-3-img link */
+a#figure-3-img img {
+  border: none; /* Remove border from the image itself */
+  border-radius: 0; /* Remove border-radius from the image */
+  margin: 0; /* Override global img margin to prevent interference with padding */
+}
+
+/* --- Updated Styles for Video Gallery --- */
+
+/* New outer wrapper for the whole section */
+.video-gallery-section {
+    margin-bottom: 40px; /* Space below the gallery section */
+    /* width: 100%; */ /* Was 100% of parent (.main-content) */
+    width: 100vw; /* Make the section span the full viewport width */
+    position: relative; /* Establishes a positioning context, good practice with calc for margins */
+    margin-left: calc((100% - 100vw) / 2); /* Calculates the negative margin to align left edge with viewport */
+    /* 100% here refers to the width of the containing block (.main-content) */
+    box-sizing: border-box; /* Ensures padding/border don't add to the 100vw width */
+}
+
+/* Container for the scrollable videos - now wider */
+.video-gallery-container {
+  /* Remove position: relative */
+  /* Remove padding: 0 45px */
+  box-sizing: border-box;
+  /* width: 100%; */ /* Remove this to use max-width */
+  max-width: 1150px; /* Set a maximum width for the gallery container */
+  margin-left: auto;   /* Center the container */
+  margin-right: auto;  /* Center the container */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-behavior: smooth; /* Smooth scrolling effect */
+   /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.video-gallery-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+
+/* The actual scrolling div holding the videos */
+.video-gallery {
+  display: flex;
+  gap: 18px; /* Space between videos */
+  /* padding: 0 5vw; */ /* Original padding */
+  padding: 0 20px; /* Adjusted to fixed padding, or keep 5vw if preferred */
+  padding-bottom: 10px; /* Add some space at the bottom */
+  box-sizing: border-box;
+  width: max-content; /* Ensure it fits all videos horizontally */
+  margin: 0 auto; /* Center the flex container if it's narrower than the container (unlikely with max-content) */
+}
+
+
+.gallery-video {
+  display: block;
+  height: 220px;  
+  width: auto;   
+  border-radius: 12px 12px 0 0;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.video-card {
+  flex: 0 0 auto;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #dedbd3;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(30, 25, 15, 0.10);
+}
+
+.video-card figcaption {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4px 9px;
+  padding: 11px 13px 12px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.video-card figcaption b {
+  font-size: 13px;
+  color: #171717;
+}
+
+.video-card figcaption > span:last-child {
+  grid-column: 1 / -1;
+  color: #68645d;
+}
+
+.video-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-id {
+  background: #e6f4ec;
+  color: #17633b;
+}
+
+.badge-ood {
+  background: #fff0dc;
+  color: #8a4b08;
+}
+
+.badge-training {
+  background: #eeeeee;
+  color: #484848;
+}
+
+.badge-method {
+  background: #e7eef8;
+  color: #234f83;
+}
+
+.task-grid,
+.embodiment-grid {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 34px;
+}
+
+.task-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.embodiment-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.task-chip,
+.embodiment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px 15px;
+  border: 1px solid #dfdcd5;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.task-chip b,
+.embodiment-card b {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+}
+
+.task-chip span,
+.embodiment-card span,
+.media-pending span,
+.figure-placeholder span {
+  color: #6a665f;
+  font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.media-pending,
+.figure-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 20px 22px;
+  border: 1px dashed #cbc6bc;
+  border-radius: 10px;
+  background: #faf9f5;
+}
+
+.media-pending {
+  max-width: 920px;
+  margin: 0 auto 38px;
+}
+
+.figure-placeholder {
+  margin: 8px 0 10px;
+  text-align: center;
+}
+
+.paper-figure {
+  margin: 12px auto 10px;
+  max-width: 820px;
+}
+
+.paper-figure-wide {
+  max-width: 960px;
+}
+
+.paper-figure-compact {
+  max-width: 720px;
+}
+
+.paper-figure img,
+.better-video-frame .teaser-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 1px solid #dedbd4;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.media-pending b,
+.figure-placeholder b {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .task-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .embodiment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .task-grid,
+  .embodiment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Styles for the navigation buttons */
+.gallery-nav {
+  /* ... existing button styles (background, color, border, radius, size, etc.) ... */
+  background-color: rgba(40, 40, 40, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;  /* Slightly smaller buttons */
+  height: 35px; /* Slightly smaller buttons */
+  font-size: 20px; /* Slightly smaller font */
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  margin: 0 5px; /* Adjust margin between buttons */
+  flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+.gallery-nav:hover {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+/* Container for the navigation buttons - remove centering margin */
+.gallery-nav-controls {
+    /* max-width: 960px; */ /* No longer needed */
+    /* margin: 15px auto 0 auto; */ /* Remove auto margin */
+    display: flex; /* Keep as flex to layout buttons */
+    /* justify-content: center; */ /* No longer needed */
+    align-items: center;
+    margin-right: 15px; /* Add space between buttons and caption text */
+}
+
+
+/* Container to center the gallery caption and buttons */
+.gallery-caption-container {
+    max-width: 960px; /* Align container with main content */
+    margin: 15px auto 0 auto; /* Top margin, centered horizontally */
+    padding: 0 20px; /* Match original caption padding */
+    box-sizing: border-box;
+    display: flex; /* Make it a flex container */
+    align-items: flex-start; /* Align items to the top */
+    justify-content: center; /* Center content horizontally */
+}
+
+/* Specific style adjustments for the gallery caption text */
+.figure-caption.gallery-caption {
+    margin-bottom: 0;
+    margin-top: 0; /* Remove top margin, alignment handled by flex */
+    text-align: left; /* Align text to the left within its space */
+    flex-grow: 1; /* Allow text to take available space if needed */
+    /* Optional: Add a small left margin if needed */
+    /* margin-left: 10px; */
+}
+/* --- End Video Gallery Styles --- */
+
+/* --- Styles for Real-to-Sim Vertical Video Layout --- */
+.r2s-vertical-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the top and bottom rows */
+  margin-bottom: 5px;
+  /* padding: 0px 20px; */ /* REMOVE this horizontal padding */
+  box-sizing: border-box;
+}
+
+.r2s-video-row {
+  display: flex;
+  gap: 15px; /* Space between items in a row */
+  align-items: center; /* Vertically align items in the row */
+  justify-content: center; /* Center the group of items if they don't fill the width */
+}
+
+/* Styling for the "slots" - direct children of .r2s-video-row */
+/* These are the elements that will grow to fill the row. */
+.r2s-video-row > .r2s-video-item, /* Targets <video class="r2s-video-item"> directly in a row */
+.r2s-video-row > .stacked-ego-videos { /* Targets <div class="stacked-ego-videos"> directly in a row */
+  flex-grow: 1; /* Allow the slot to grow */
+  flex-basis: 0;  /* Good practice with flex-grow */
+  /* max-height: 240px; */ /* REMOVE max-height from general slot rule */
+
+  /* Make the slot a flex container to center its actual content (the video or the stack) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #fdfaf4; /* Border for the slot */
+  box-sizing: border-box;
+  background-color: #fdfaf4; /* Background for the slot */
+}
+
+/* Set max-height for slots in the TOP row */
+.r2s-top-row > .r2s-video-item,
+.r2s-top-row > .stacked-ego-videos { /* Though top row doesn't have stacked videos, good for consistency */
+  max-height: 266px;
+}
+
+/* Set max-height for slots in the BOTTOM row */
+.r2s-bottom-row > .r2s-video-item,
+.r2s-bottom-row > .stacked-ego-videos {
+  max-height: 247px;
+}
+
+/* General styling for ALL <video> elements with class r2s-video-item */
+/* This applies to videos directly in a row AND those inside .stacked-ego-videos */
+video.r2s-video-item {
+  display: block; /* Behaves well for sizing */
+  max-width: 100%;  /* Video won't exceed the width of its parent container (slot or stacked-ego-videos div) */
+  max-height: 100%; /* Video won't exceed the height of its parent container */
+  width: auto;      /* Maintain aspect ratio */
+  height: auto;     /* Maintain aspect ratio */
+  object-fit: contain; /* Show entire video, letterbox if needed */
+  background-color: #fdfaf4; /* Black background for letterboxing */
+  border: none; /* Video itself has no border; the slot has one if applicable */
+}
+
+/* Apply a slight scale to SMPL and G1 videos to hide potential 1px edge artifacts */
+.r2s-video-smpl,
+.r2s-video-g1 {
+  transform: scale(1.001);
+}
+
+/* Styling for the container of stacked videos */
+.stacked-ego-videos {
+  /* This element is a flex item within .r2s-video-row (handled by the rule above) */
+  /* and also a flex container for its children. */
+  display: flex; /* This ensures it behaves as a flex container for its children */
+                 /* It might override display:flex from the slot rule if that rule also targeted this class directly,
+                    but the current slot rule uses the child selector '>' so it's fine. */
+  flex-direction: column;
+  gap: 5px;
+  
+  width: auto; /* Width determined by its 1:1 children */
+  height: 100%; /* Take full available height of its slot (which is max 180px) */
+  max-width: 100%; /* Ensure it doesn't overflow its slot if children are unexpectedly wide */
+  
+  /* Remove any slot-like styling if it was applied by a more general class,
+     as its appearance is defined by its children and its slot parent. */
+  border: none; /* The slot around .stacked-ego-videos has the border */
+  background-color: transparent; /* The slot around .stacked-ego-videos has the background */
+  /* max-height is effectively controlled by its parent slot */
+}
+
+/* Styling for videos INSIDE the .stacked-ego-videos container */
+.stacked-ego-videos > video.r2s-video-item {
+  /* These videos are already styled by 'video.r2s-video-item' for object-fit, background, etc. */
+  /* We just need to enforce their 1:1 aspect ratio and height calculation. */
+  aspect-ratio: 1 / 1;
+  width: auto; /* Width will be derived from height and 1:1 aspect ratio */
+  height: calc(50% - (5px / 2)); /* Each takes half the parent's height, minus half the gap */
+  min-height: 0;
+  /* max-width and max-height of 100% (from video.r2s-video-item) are fine here,
+     as they refer to 100% of this specific video's calculated 1:1 box. */
+}
+/* --- End Real-to-Sim Vertical Video Layout Styles --- */
+
+/* --- Styles for Real-to-Sim Captions --- */
+.r2s-caption-row {
+  display: flex;
+  gap: 15px; /* Should match the gap in .r2s-video-row */
+  justify-content: center; /* Should match justify-content in .r2s-video-row */
+  margin-top: -15px; /* Small space between videos and captions */
+}
+
+.r2s-caption-item {
+  flex-grow: 1; /* Allow caption item to grow, similar to video slots */
+  flex-basis: 0;
+  text-align: center; /* Center text within its slot */
+  font-size: 13px; /* Adjust as needed */
+  color: #555; /* Adjust as needed */
+  font-family: 'Roboto Mono', monospace;
+  /* Optional: to better align with video slots if they have borders/padding */
+  /* padding: 0 5px; */
+}
+/* --- End Styles for Real-to-Sim Captions --- */
+
+.paper-section {
+  font-size: 20px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  font-family:     
+    BlinkMacSystemFont,
+    -apple-system,
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif;
+}
+
+.pull-quote {
+  font-size: 32px;
+  font-style: italic;
+  font-weight: 400;
+  margin: 60px 0 20px 0;
+  color: #333;
+}
+
+.footer {
+  font-size: 14px;
+  font-family: 'Roboto Mono', monospace;
+  color: #666;
+  margin-top: 80px;
+  border-top: 1px solid #ccc;
+  padding-top: 30px;
+  text-align: center;
+}
+
+/* New style for figure captions */
+.figure-caption {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin-top: 10px; /* Space above caption */
+  margin-bottom: 40px; /* Space below caption, before next element */
+  padding: 0 20px; /* Add some horizontal padding */
+}
+
+.figure-caption sub {
+  line-height: 0;
+}
+
+/* New styles for quick links */
+.quick-links {
+  text-align: center;
+  margin-top: -10px; /* Adjust to bring closer to caption if needed, or use a positive value for more space */
+  margin-bottom: 30px; /* Space before the next section (Abstract tagline) */
+}
+.quick-links a {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 18px; /* Slightly larger than caption */
+  font-weight: bold;
+  /* color: #337ab7; */ /* Standard link blue, or choose your own */
+  color: #333; /* Change to dark grey */
+  text-decoration: none;
+  margin: 0 36px; /* Spacing between links */
+  padding: 5px 8px; /* Add some padding for a button-like feel if desired */
+  /* border: 1px solid transparent; */ /* Optional: for button look */
+  /* border-radius: 4px; */ /* Optional: for button look */
+}
+.quick-links a:hover,
+.quick-links a:focus {
+  text-decoration: underline;
+  /* color: #23527c; */ /* Darker blue on hover */
+  color: #000; /* Optional: Change to black or slightly darker grey on hover */
+  /* background-color: #f0f0f0; */ /* Optional: background for button look on hover */
+  /* border-color: #ccc; */ /* Optional: for button look on hover */
+}
+/* End new styles for quick links */
+
+/* Adding subsection styling in the table of contents */
+.toc-subsection {
+  margin-left: 14px; /* Indent subsections in TOC */
+  margin-top: -4px;
+}
+
+.toc .toc-subsection a {
+  font-size: 13px; /* Keeps the longest label on one line in the 180px TOC */
+}
+
+/* Style for section subtitles (subsection headers) */
+.section-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  font-size: 20px;
+  background: none;
+  color: #000;
+  display: block;
+  padding: 6px 14px;
+  margin: 30px 0 24px 0;
+}
+
+.additional-video-row {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: flex-start;
+}
+.additional-video-item {
+  height: 220px;
+  width: auto;
+  border-radius: 15px;
+  background-color: #000;
+}
+#input-video-cropped {
+  width: 350px; /* Controls the visible width */
+  object-fit: cover; /* Crops the video to fit the width */
+}
+#input-video-cropped2 {
+  width: 250px; /* Controls the visible width */
+  object-fit: cover; /* Crops the video to fit the width */
+}
+#input-video-cropped3 {
+  width: 300px; /* Controls the visible width */
+  object-fit: cover; /* Crops the video to fit the width */
+}
+#input-video-cropped4 {
+  width: 250px; /* Controls the visible width */
+  object-fit: cover; /* Crops the video to fit the width */
+}
+
+/* Styling for individual videos within the gallery */
+.video-gallery .gallery-video {
+  height: 224px;
+  margin-right: 0px; 
+  flex-shrink: 0; 
+}
+
+/* Make videos in the Reconstruction Gallery taller */
+#reconstructionGallerySection .gallery-video {
+  height: 220px; 
+} 
+
+/* Whole-body controller videos are 4:3; keep display in 4:3 to avoid side bars */
+#WBCGallerySection .gallery-video {
+  width: 298px;
+  height: 224px;
+  object-fit: cover;
+  background-color: transparent;
+}
+
+/* Autonomous policy videos keep their native aspect ratios */
+#AutonomousPoliciesGallerySection .gallery-video {
+  width: auto;
+  height: 224px;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+#ScoopGallerySection .video-gallery .gallery-video {
+  height: 336px;
+}
+
+/* Styling for the caption and navigation controls container */
+.gallery-caption-container {
+  max-width: 960px; /* Align container with main content */
+  margin: 15px auto 0 auto; /* Top margin, centered horizontally */
+  padding: 0 20px; /* Match original caption padding */
+  box-sizing: border-box;
+  display: flex; /* Make it a flex container */
+  align-items: flex-start; /* Align items to the top */
+  justify-content: center; /* Center content horizontally */
+}
+
+/* --- BibTeX Styling --- */
+.paper-bibtex-code {
+  background-color: rgba(80, 80, 80, 0.8); /* Match gallery arrow background */
+  padding: 20px;
+  border-radius: 8px;
+  margin: 80px auto -40px; /* Spacing and centering, bottom margin reduced to 20px */
+  max-width: 1000px;  /* Max width of the BibTeX box */
+  box-sizing: border-box;
+  font-size: 18px; /* Base font size for BibTeX */
+}
+
+.paper-bibtex-title {
+  font-family: 'Courier New', Courier, monospace; /* Same font family as code */
+  font-weight: bold;
+  font-size: 14px; /* Slightly larger than the code text */
+  margin-bottom: -10px; /* Space between title and pre block */
+  color: #f1f1f1;
+}
+
+.paper-bibtex-code pre {
+  background-color: transparent;
+  white-space: pre-wrap;       /* Allows text to wrap */
+  overflow-wrap: break-word;   /* Breaks long words if necessary (updated from word-wrap) */
+  margin: 0;                   /* Remove default margin from pre tag */
+}
+
+.paper-bibtex-code code {
+  margin-left: -24px;
+  margin-bottom: -30px;
+  color: #f1f1f1;
+  background-color: transparent;
+  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+  overflow-wrap: break-word; /* Ensure long words break to prevent overflow */
+  /* Color will be inherited from .bibtex-code */
+}
+/* --- End BibTeX Styling --- */
+
+/* Import Yotube Video */
+.youtube-video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+}
+
+.youtube-video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.better-video-frame {
+  display: inline-block;
+
+  /* 控制大小 */
+  width: 960px;
+  max-width: 100%;
+  height: auto;
+
+  /* 视觉样式 */
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background-color: #f7f5ef;
+
+  /* 关键：裁剪 video */
+  overflow: hidden;
+}
+
+.teaser-placeholder {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px;
+  border: 1px dashed #c8c3b9;
+  box-sizing: border-box;
+}
+
+.teaser-placeholder b {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+}
+
+.teaser-placeholder span {
+  max-width: 560px;
+  color: #6a665f;
+  font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.better-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.better-video-frame .teaser-figure {
+  border: 0;
+  border-radius: 0;
+}
+
+/* ==================== Touch Dream Visualization ==================== */
+#dt-root {
+  max-width: 960px;
+  margin: 0 auto 40px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+}
+#dt-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.dt-label {
+  font-weight: 600;
+}
+#dt-controls select {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+#dt-mode-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+#dt-mode-badge.dt-badge-latent { background: #e8d5f5; color: #6a2c91; }
+#dt-mode-badge.dt-badge-raw { background: #d5eaf5; color: #1a5276; }
+#dt-tabs {
+  display: flex;
+  gap: 4px;
+}
+.dt-tab {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  padding: 5px 14px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #f5f3ee;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.dt-tab:hover { background: #ebe8e0; }
+.dt-tab-active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
+#dt-finger-sel {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+#dt-panels {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #1b1b1b;
+}
+#dt-cam-wrap {
+  flex: 1;
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+}
+#dt-cam-wrap video {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+#dt-cam-loading {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  font-family: 'Roboto Mono', monospace;
+  background: #111;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+#dt-cam-loading.dt-hidden { opacity: 0; }
+#dt-cam-label {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  pointer-events: none;
+}
+#dt-play:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+#dt-vis-wrap {
+  flex: 1;
+  position: relative;
+  background: #faf8f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+#dt-vis-wrap canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+#dt-playback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#dt-play {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+#dt-play:hover { background: #555; }
+#dt-slider {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #ddd;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+#dt-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #333;
+  cursor: pointer;
+}
+#dt-time {
+  min-width: 100px;
+  text-align: right;
+  font-size: 12px;
+  color: #555;
+  flex-shrink: 0;
+}
+/* ==================== End Touch Dream ==================== */
+
+/* ==================== Results Table ==================== */
+.results-table-wrap {
+  max-width: 780px;
+  margin: 10px auto 10px;
+  overflow-x: auto;
+}
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  background: transparent;
+}
+.results-table thead th {
+  background: transparent;
+  color: #1b1b1b;
+  font-weight: 700;
+  padding: 10px 16px;
+  text-align: center;
+  border-bottom: 2px solid #1b1b1b;
+  border-top: 2px solid #1b1b1b;
+}
+.results-table thead th:first-child {
+  text-align: left;
+}
+.results-table tbody td {
+  padding: 9px 16px;
+  text-align: center;
+  border-bottom: 1px solid #d5d0c8;
+}
+.results-table tbody td:first-child {
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.results-table tbody tr:last-child td {
+  border-bottom: 2px solid #1b1b1b;
+}
+.results-table tbody tr:hover {
+  background: rgba(0,0,0,0.03);
+}
+.results-table .best {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.results-table .not-tracked {
+  color: #999;
+  font-style: italic;
+}
+
+/* ==================== Results Figures ==================== */
+.results-figure {
+  max-width: 960px;
+  margin: 0 auto 8px;
+  text-align: center;
+}
+.results-figure img {
+  width: 100%;
+  max-width: 900px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* ==================== BibTeX ==================== */
+.bibtex-block {
+  overflow-x: auto;
+}
+.bibtex-block pre {
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f7f5f1;
+  color: #242424;
+  text-align: left;
+  white-space: pre;
+}
+.bibtex-block code {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* ==================== Video Lightbox ==================== */
+.video-lightbox-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.video-lightbox-content video {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 6px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+.video-lightbox-close {
+  position: absolute;
+  top: -36px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.8;
+}
+.video-lightbox-close:hover {
+  opacity: 1;
+}
+
+/* ==================== Interactive embodiment browser ==================== */
+.task-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 22px;
+}
+
+.task-tone,
+.condition-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.task-kitchen-bread { background: #f7eadc; color: #7b4b26; border-color: #e8caa9 !important; }
+.task-kitchen-cleanup { background: #e6f0e8; color: #3c6244; border-color: #bad0bf !important; }
+.task-sort { background: #e5eef6; color: #355b78; border-color: #b9cfdf !important; }
+.task-insert { background: #eee9f5; color: #5b4c73; border-color: #cfc2df !important; }
+.task-scoop { background: #f3edcf; color: #6d5d21; border-color: #d9cc86 !important; }
+
+.embodiment-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 22px;
+}
+
+.embodiment-selector {
+  appearance: none;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #dedbd3;
+  border-radius: 12px;
+  background: #fff;
+  color: #171717;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 9px rgba(45, 38, 28, 0.05);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.embodiment-selector:hover {
+  transform: translateY(-2px);
+  border-color: #9e998f;
+  box-shadow: 0 7px 18px rgba(45, 38, 28, 0.10);
+}
+
+.embodiment-selector.active {
+  border-color: #25231f;
+  box-shadow: 0 0 0 2px #25231f, 0 8px 20px rgba(45, 38, 28, 0.10);
+}
+
+.embodiment-selector img,
+.embodiment-placeholder {
+  display: block;
+  width: 100%;
+  height: 112px;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  filter: saturate(.85) contrast(.96);
+}
+
+.embodiment-placeholder {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ebe8e1, #d6d2c9);
+  color: #807a71;
+  font: 700 24px/1 'Roboto Mono', monospace;
+}
+
+.embodiment-selector > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 12px 12px;
+}
+
+.embodiment-selector b {
+  font: 700 12px/1.2 'Roboto Mono', monospace;
+}
+
+.embodiment-selector small {
+  color: #716c63;
+  font-size: 11px;
+}
+
+.embodiment-selector.pending:not(.active) {
+  opacity: .76;
+}
+
+.media-browser {
+  scroll-margin-top: 24px;
+  padding: 22px;
+  border: 1px solid #dcd8cf;
+  border-radius: 16px;
+  background: #f7f5f0;
+  margin-bottom: 46px;
+}
+
+.media-browser-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.browser-kicker {
+  color: #79736a;
+  font: 700 10px/1 'Roboto Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.media-browser-head h3 {
+  margin: 5px 0 4px;
+  font: 700 24px/1.2 Georgia, serif;
+}
+
+.media-browser-head p {
+  margin: 0;
+  color: #666158;
+  font-size: 13px;
+}
+
+.source-legend {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 440px;
+  color: #817b72;
+  font-size: 10px;
+}
+
+.source-legend b {
+  padding: 3px 6px;
+  border: 1px solid #d5d0c6;
+  border-radius: 5px;
+  background: #fff;
+  color: #575149;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.model-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid #ddd8cf;
+  margin-bottom: 18px;
+}
+
+.model-filter {
+  appearance: none;
+  padding: 8px 13px;
+  border: 1px solid #d3cec4;
+  border-radius: 999px;
+  background: #fff;
+  color: #4f4b45;
+  font: 700 11px/1 'Roboto Mono', monospace;
+  cursor: pointer;
+}
+
+.model-filter:hover {
+  border-color: #9f988d;
+}
+
+.model-filter.active {
+  box-shadow: inset 0 0 0 1px currentColor;
+  color: #191816;
+}
+
+.model-human-pretrain,
+.model-human-data { background: #f5edf3; border-color: #d9c4d4; color: #6d4c66; }
+.model-human-robot-pretrain { background: #f4efe5; border-color: #ddcfae; color: #695833; }
+.model-cross-embodiment { background: #e9eff4; border-color: #bdd0df; color: #355b78; }
+.model-mxt-plus { background: #e8f0e9; border-color: #bfd1c2; color: #3c6244; }
+.model-act { background: #eeeaf4; border-color: #cec3dc; color: #5c4d72; }
+.model-pretrained-demo { background: #f6ecdf; border-color: #e3c9a8; color: #76502d; }
+.model-simulation { background: #e9edf3; border-color: #bdc8d7; color: #40556f; }
+.model-evaluation { background: #f1eee8; border-color: #d3cabd; color: #5f5548; }
+
+.embodiment-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.media-card {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #ddd8cf;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(40, 34, 24, .06);
+}
+
+.media-card[data-task="kitchen-bread"] { background: #fbf3e8; border-color: #dfc5a7; }
+.media-card[data-task="kitchen-cleanup"] { background: #edf4ee; border-color: #bdd0c1; }
+.media-card[data-task="sort"] { background: #edf3f8; border-color: #bed0de; }
+.media-card[data-task="insert"] { background: #f2eef7; border-color: #cfc2df; }
+.media-card[data-task="scoop"] { background: #f6f1d9; border-color: #d9cc86; }
+
+.media-card[data-task] .media-card-video {
+  border-bottom: 3px solid transparent;
+}
+
+.media-card[data-task="kitchen-bread"] .media-card-video { border-bottom-color: #d2ad83; }
+.media-card[data-task="kitchen-cleanup"] .media-card-video { border-bottom-color: #9fbea5; }
+.media-card[data-task="sort"] .media-card-video { border-bottom-color: #9eb9cd; }
+.media-card[data-task="insert"] .media-card-video { border-bottom-color: #b6a5ca; }
+.media-card[data-task="scoop"] .media-card-video { border-bottom-color: #cabd6f; }
+
+.media-card[hidden] { display: none; }
+
+.media-card-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #ddd9d1;
+}
+
+.media-card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: default;
+}
+
+.media-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 13px 14px;
+}
+
+.media-card figcaption > div {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.media-card figcaption b {
+  color: #1d1b18;
+  font: 700 13px/1.3 'Roboto Mono', monospace;
+}
+
+.media-card figcaption > span {
+  color: #706a61;
+  font-size: 12px;
+}
+
+.condition-tag {
+  background: #eeece7;
+  color: #575149;
+}
+
+.condition-tag.id { background: #e6f2ea; color: #286044; }
+.condition-tag.ood { background: #f7e8d9; color: #865027; }
+.condition-tag.human { background: #f0e6ee; color: #74546e; }
+.condition-tag.sim { background: #e6edf5; color: #405e7b; }
+
+.media-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 55px 20px;
+  border: 1px dashed #c9c3b8;
+  border-radius: 12px;
+  color: #716b62;
+  text-align: center;
+}
+
+.media-empty[hidden] { display: none; }
+
+@media (max-width: 960px) {
+  .embodiment-media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .embodiment-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .embodiment-selector img, .embodiment-placeholder { height: 94px; }
+  .embodiment-media-grid { grid-template-columns: 1fr; }
+  .media-browser { padding: 14px; }
+}
+
+/* A continuous research gallery, with optional filters. */
+.media-browser { background: transparent; border: 0; padding: 0; box-shadow: none; }
+.gallery-intro { margin: 30px 0 22px; }
+.gallery-intro h3 { font: 600 27px/1.3 'Playfair Display', serif; margin: 0 0 8px; }
+.gallery-intro p { color: #716b62; font-size: 15px; margin: 0; }
+.gallery-filter-bar { padding: 20px; border: 1px solid #e7e3dc; border-radius: 14px; background: #fff; }
+.gallery-filter-group + .gallery-filter-group { margin-top: 15px; }
+.filter-label { display: block; margin-bottom: 8px; font-size: 11px; font-weight: 650; color: #756e65; letter-spacing: .08em; text-transform: uppercase; }
+.gallery-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.gallery-filter { padding: 7px 11px; border: 1px solid #e4dfd7; border-radius: 7px; background: #faf9f6; color: #625b52; font: 500 12px/1.3 BlinkMacSystemFont, -apple-system, 'Segoe UI', sans-serif; cursor: pointer; transition: background .15s, border-color .15s; }
+.gallery-filter:hover { border-color: #999086; }
+.gallery-filter[aria-pressed="true"] { background: #282724; color: #fff; border-color: #282724; }
+.gallery-filter:focus-visible { outline: 2px solid #647a88; outline-offset: 3px; }
+.gallery-count { margin: 15px 0 0; color: #8a8278; font-size: 12px; text-align: right; }
+.gallery-rows { display: flex; flex-direction: column; gap: 34px; }
+.embodiment-row { padding: 0 0 30px; border-bottom: 1px solid #e4dfd7; }
+.embodiment-row[hidden] { display: none; }
+.embodiment-row > header { display: flex; gap: 14px; align-items: center; margin-bottom: 16px; }
+.embodiment-row > header img { width: 76px; height: 52px; object-fit: cover; border: 0; border-radius: 7px; margin: 0; }
+.embodiment-row h3 { margin: 0 0 4px; color: #292621; font: 600 19px/1.3 BlinkMacSystemFont, -apple-system, 'Segoe UI', sans-serif; }
+.embodiment-row header p { margin: 0; color: #81796f; font-size: 12px; }
+.media-card { box-shadow: none; border-radius: 9px; }
+.media-card figcaption { min-height: 100px; }
+.media-card figcaption b { font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; }
+.media-card-video { background: #171717; }
+.gallery-filter.task-kitchen-bread:not([aria-pressed="true"]) { background: #fbf3e8; }
+.gallery-filter.task-kitchen-cleanup:not([aria-pressed="true"]) { background: #edf4ee; }
+.gallery-filter.task-sort:not([aria-pressed="true"]) { background: #edf3f8; }
+.gallery-filter.task-insert:not([aria-pressed="true"]) { background: #f2eef7; }
+.gallery-filter.task-scoop:not([aria-pressed="true"]) { background: #f6f1d9; }
+@media (max-width: 620px) {
+  .gallery-filter-bar { padding: 14px; }
+  .gallery-filter { font-size: 11px; padding: 7px 9px; }
+  .media-browser { padding: 0; }
+  .gallery-rows { gap: 22px; }
+}
