@@ -1,8 +1,8 @@
-# egox.github.io
+# egox-dream.github.io
 
 Project page for **EgoX: Egocentric Cross-Embodiment Manipulation with Embodiment Dreaming**.
 
-Live site: https://scaling-robot-dexterity.github.io/egox.github.io/
+Live site: https://egox-dream.github.io/
 
 ## Local preview
 
