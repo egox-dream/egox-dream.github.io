@@ -448,6 +448,9 @@
   transition: opacity 0.4s 0.7s;
 }
 
+.rs-line.is-dashed { stroke-linecap: butt; }
+.rs-marker.is-hollow { stroke-width: 1.7; }
+
 .rs-comp:not(.is-in) .rs-line { stroke-dashoffset: 1; }
 .rs-comp:not(.is-in) .rs-marker { opacity: 0; transition: none; }
 .rs-comp:not(.is-in) .rs-band { fill-opacity: 0; transition: none; }

@@ -26,12 +26,12 @@
       ]
     ],
     composition: [
-      { embodiment: 'G1-Dex5', task: 'Sort', color: '#4c78a8', marker: 'circle', id: [[0.601, 0.06], [0.706, 0.077], [0.839, 0.054], [0.871, 0.05]], ood: [[0.468, 0.085], [0.597, 0.051], [0.708, 0.146], [0.747, 0.1]] },
-      { embodiment: 'G1-Dex5', task: 'Insert', color: '#e07a5f', marker: 'circle', id: [[0.641, 0.082], [0.692, 0.062], [0.679, 0.074], [0.756, 0.059]], ood: [[0.238, 0.145], [0.714, 0.079], [0.738, 0.095], [0.81, 0.092]] },
-      { embodiment: 'xArm7-Dex4', task: 'Sort', color: '#4fa3a5', marker: 'square', id: [[0.734, 0.089], [0.815, 0.052], [0.874, 0.036], [0.92, 0.036]], ood: [[0.721, 0.073], [0.649, 0.086], [0.721, 0.107], [0.883, 0.075]] },
-      { embodiment: 'xArm7-Dex4', task: 'Insert', color: '#d9a441', marker: 'square', id: [[0.692, 0.101], [0.513, 0.061], [0.782, 0.089], [0.679, 0.044]], ood: [[0.5, 0.141], [0.548, 0.13], [0.619, 0.144], [0.69, 0.057]] },
-      { embodiment: 'G1-Sim-Dex3', task: 'Kitchen-Bread', color: '#8c6bb1', marker: 'triangle', id: [[0.613, 0.047], [0.581, 0.05], [0.631, 0.053], [0.684, 0.053]], ood: [[0.65, 0.063], [0.661, 0.074], [0.556, 0.06], [0.656, 0.084]] },
-      { embodiment: 'R1Lite-Gripper', task: 'Sort', color: '#59a14f', marker: 'diamond', id: [[0.79, 0.065], [0.671, 0.065], [0.755, 0.046], [0.881, 0.034]], ood: [[0.683, 0.067], [0.763, 0.111], [0.683, 0.128], [0.843, 0.045]] }
+      { embodiment: 'G1-Dex5', task: 'Sort', color: '#07588e', marker: 'circle', id: [[0.601, 0.06], [0.706, 0.077], [0.839, 0.054], [0.871, 0.05]], ood: [[0.468, 0.085], [0.597, 0.051], [0.708, 0.146], [0.747, 0.1]] },
+      { embodiment: 'G1-Dex5', task: 'Insert', color: '#7daad7', marker: 'circle', dashed: true, id: [[0.641, 0.082], [0.692, 0.062], [0.679, 0.074], [0.756, 0.059]], ood: [[0.238, 0.145], [0.714, 0.079], [0.738, 0.095], [0.81, 0.092]] },
+      { embodiment: 'xArm7-Dex4', task: 'Sort', color: '#d55e00', marker: 'square', id: [[0.734, 0.089], [0.815, 0.052], [0.874, 0.036], [0.92, 0.036]], ood: [[0.721, 0.073], [0.649, 0.086], [0.721, 0.107], [0.883, 0.075]] },
+      { embodiment: 'xArm7-Dex4', task: 'Insert', color: '#e9552c', marker: 'square', dashed: true, id: [[0.692, 0.101], [0.513, 0.061], [0.782, 0.089], [0.679, 0.044]], ood: [[0.5, 0.141], [0.548, 0.13], [0.619, 0.144], [0.69, 0.057]] },
+      { embodiment: 'G1-Sim-Dex3', task: 'Kitchen-Bread', color: '#4b90d9', marker: 'triangle', id: [[0.613, 0.047], [0.581, 0.05], [0.631, 0.053], [0.684, 0.053]], ood: [[0.65, 0.063], [0.661, 0.074], [0.556, 0.06], [0.656, 0.084]] },
+      { embodiment: 'R1Lite-Gripper', task: 'Sort', color: '#a49735', marker: 'diamond', id: [[0.79, 0.065], [0.671, 0.065], [0.755, 0.046], [0.881, 0.034]], ood: [[0.683, 0.067], [0.763, 0.111], [0.683, 0.128], [0.843, 0.045]] }
     ],
     dreaming: [
       { embodiment: 'G1-Dex5', task: 'Scoop', without: [0.4, 0.071], with: [0.9, 0.055] },
@@ -227,11 +227,18 @@
     const W = 430;
     const H = 284;
     const M = { l: 36, r: 14, t: 14, b: 32 };
-    const lo = 0;
     const hi = 1.0;
     const x = (i) => M.l + (W - M.l - M.r) * (0.08 + (0.84 * i) / 3);
-    const y = (v) => M.t + (H - M.t - M.b) * (1 - (v - lo) / (hi - lo));
     const path = (pts) => pts.map(([px, py]) => `${px.toFixed(1)} ${py.toFixed(1)}`).join(' L');
+    // The draw-in animation moves stroke-dashoffset from 1 to 0 over pathLength 1, so a dashed line carries its
+    // dashes inside that pattern: dashes along the line, then a gap as long as the line.
+    const dashes = (pts, on = 5.3, off = 2.9) => {
+      const len = pts.slice(1).reduce((s, p, j) => s + Math.hypot(p[0] - pts[j][0], p[1] - pts[j][1]), 0);
+      const pattern = [];
+      for (let at = 0; at < len; at += on + off) pattern.push(Math.min(on, len - at), off);
+      pattern[pattern.length - 1] += len;
+      return pattern.map((v) => (v / len).toFixed(6)).join(' ');
+    };
 
     const focus = (i) => {
       if (i === null) delete root.dataset.focus;
@@ -240,9 +247,11 @@
     };
 
     let pinned = null;
-    [['id', 'In-distribution', 'ID'], ['ood', 'Out-of-distribution', 'OOD']].forEach(([key, title, tag]) => {
+    // ID scores and their SEM bands stay above 0.4
+    [['id', 'In-distribution', 'ID', 0.4], ['ood', 'Out-of-distribution', 'OOD', 0]].forEach(([key, title, tag, lo]) => {
+      const y = (v) => M.t + (H - M.t - M.b) * (1 - (v - lo) / (hi - lo));
       const chart = svg('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${title} task progress score for each pretraining mixture, mean and SEM` });
-      for (let k = 0; k <= 5; k++) {
+      for (let k = 0; k <= Math.round((hi - lo) / 0.2); k++) {
         const t = lo + k * 0.2;
         chart.append(svg('line', { class: k === 0 ? 'rs-svg-axis' : 'rs-svg-grid', x1: M.l, x2: W - M.r, y1: y(t), y2: y(t) }));
         chart.append(svg('text', { x: M.l - 8, y: y(t) + 3.5, 'text-anchor': 'end' }, t.toFixed(1)));
@@ -260,11 +269,14 @@
         const pts = series[key].map(([v], j) => [x(j), y(v)]);
         const d = `M${path(pts)}`;
         g.append(svg('path', { class: 'rs-hit', d }));
-        g.append(svg('path', { class: 'rs-line', d, stroke: series.color, pathLength: 1 }));
+        const line = svg('path', { class: series.dashed ? 'rs-line is-dashed' : 'rs-line', d, stroke: series.color, pathLength: 1 });
+        if (series.dashed) line.style.strokeDasharray = dashes(pts);
+        g.append(line);
         series[key].forEach(([v, e], j) => {
-          const dot = marker(series.marker, pts[j][0], pts[j][1], 4.4);
-          dot.setAttribute('class', 'rs-marker');
-          dot.setAttribute('fill', series.color);
+          const dot = marker(series.marker, pts[j][0], pts[j][1], series.dashed ? 4 : 4.4);
+          dot.setAttribute('class', series.dashed ? 'rs-marker is-hollow' : 'rs-marker');
+          dot.setAttribute('fill', series.dashed ? '#fff' : series.color);
+          if (series.dashed) dot.style.stroke = series.color;
           dot.setAttribute('data-tip', tipHTML(`${series.embodiment} &middot; ${series.task}`, `${STAGES[j]} &middot; ${tag}`, withError(v, e)));
           g.append(dot);
         });
@@ -282,11 +294,12 @@
 
     renderLegend(legendHolder, RESULTS.composition.map((series, i) => {
       const icon = svg('svg', { width: 26, height: 12, viewBox: '0 0 26 12', 'aria-hidden': 'true' });
-      icon.append(svg('line', { x1: 1, x2: 25, y1: 6, y2: 6, stroke: series.color, 'stroke-width': 2.2, 'stroke-linecap': 'round' }));
-      const dot = marker(series.marker, 13, 6, 3.8);
-      dot.setAttribute('fill', series.color);
-      dot.setAttribute('stroke', '#fff');
-      dot.setAttribute('stroke-width', 1.1);
+      const stroke = series.dashed ? { 'stroke-dasharray': '4 2.5', 'stroke-linecap': 'butt' } : { 'stroke-linecap': 'round' };
+      icon.append(svg('line', { x1: 1, x2: 25, y1: 6, y2: 6, stroke: series.color, 'stroke-width': 2.2, ...stroke }));
+      const dot = marker(series.marker, 13, 6, series.dashed ? 3.3 : 3.8);
+      dot.setAttribute('fill', series.dashed ? '#fff' : series.color);
+      dot.setAttribute('stroke', series.dashed ? series.color : '#fff');
+      dot.setAttribute('stroke-width', series.dashed ? 1.4 : 1.1);
       icon.append(dot);
       return { key: i, label: `${series.embodiment} &middot; ${series.task}`, icon };
     }), focus);

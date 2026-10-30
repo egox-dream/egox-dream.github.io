@@ -12,7 +12,7 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="style.css?v=20261011-1">
-  <link rel="stylesheet" href="results.css?v=20261030-1">
+  <link rel="stylesheet" href="results.css?v=20261030-2">
   <link rel="stylesheet" href="gallery.css?v=20261012-3">
   <link rel="stylesheet" href="embodiments.css?v=20261004-7">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -380,7 +380,7 @@
       <figure class="rs-figure">
         <div class="rs-comp rs-anim" id="compositionChart"></div>
         <div class="rs-legend rs-legend-series" id="compositionLegend"></div>
-        <p class="rs-note">Normalized task progress score for each pretraining mixture, mean &plusmn; SEM (shaded). Each mixture adds to the previous one. Hover over a line or a legend entry to trace one setting.</p>
+        <p class="rs-note">Normalized task progress score for each pretraining mixture, mean &plusmn; SEM (shaded). ID and OOD use different y ranges. Each mixture adds to the previous one. Hover over a line or a legend entry to trace one setting.</p>
       </figure>
       <p class="figure-caption"><b>Pretraining Data Composition.</b> Every pretraining mixture improves average OOD performance over no pretraining, and the gains grow as more embodiments are added. Full cross-embodiment pretraining performs best, improving the average task progress score by 0.12 in-distribution and 0.23 out-of-distribution, with OOD gains on all six task&ndash;embodiment pairs.</p>
     </section>
@@ -455,7 +455,7 @@
   </div>
 
   <script src="./gallery.js?v=20261012-3" defer></script>
-  <script src="./results.js?v=20261030-1" defer></script>
+  <script src="./results.js?v=20261030-2" defer></script>
   <script src="./embodiments.js?v=20261004-6" defer></script>
 
 </body>
