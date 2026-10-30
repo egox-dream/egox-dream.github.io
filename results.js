@@ -45,11 +45,11 @@
     latent: {
       labels: ['G1-Dex5', 'xArm7-Dex4', 'Z1-Tool', 'LocoMan-Dex2', 'Human-Dex5'],
       cells: [
-        [null, [-24.8, '#77a9d1'], [-46.6, '#326ea2'], [-34.5, '#4e8abb'], [-22.5, '#83b1d6']],
-        [[-18.3, '#f2a38d'], null, [-29.7, '#5995c5'], [-31.9, '#5390c0'], [-30.8, '#5693c3']],
-        [[-6.2, '#fbded5'], [-8.0, '#fad4c8'], null, [-55.6, '#1e598f'], [-59.9, '#154f86']],
-        [[-9.7, '#f9cdbf'], [-8.3, '#fad4c8'], [31.7, '#b6afbf'], null, [-36.7, '#4885b6']],
-        [[-32.3, '#e3705b'], [-31.2, '#e5725d'], [-42.3, '#cb5149'], [-38.5, '#d45c4f'], null]
+        [null, [-24.8, '#bfba8c'], [-46.6, '#87803b'], [-34.5, '#a29d68'], [-22.5, '#c6c395']],
+        [[-18.3, '#fba799'], null, [-29.7, '#aea97a'], [-31.9, '#a9a372'], [-30.8, '#aba676']],
+        [[-6.2, '#fed8d1'], [-8.0, '#fdd0c8'], null, [-55.6, '#6b6628'], [-59.9, '#5c5822']],
+        [[-9.7, '#fcc8bf'], [-8.3, '#fdcfc6'], [31.7, '#d6d6d6'], null, [-36.7, '#9d9860']],
+        [[-32.3, '#f77966'], [-31.2, '#fb7c69'], [-42.3, '#d35b47'], [-38.5, '#e06653'], null]
       ]
     },
     // Per variant and split: [mean, SEM] without, then with pretraining. Four decimals keep the
@@ -69,7 +69,7 @@
     { key: 'mxt_w', label: 'MXT+ (w/ pretrain)', color: '#ff806d' },
   ];
   const DREAM_METHODS = [
-    { key: 'without', label: 'w/o embodiment dreaming (MXT)', color: '#c5caf8' },
+    { key: 'without', label: 'w/o embodiment dreaming (MXT)', color: '#cdc994' },
     { key: 'with', label: 'w/ embodiment dreaming (MXT+)', color: '#ff806d' },
   ];
   const COARSE_VARIANTS = [  // colors without, then with pretraining
