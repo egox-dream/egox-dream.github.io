@@ -612,7 +612,7 @@
 }
 
 .rs-stat-pre { border-color: #efd3cb; background: #fcf3f0; }
-.rs-stat-dream { border-color: #dfdcb9; background: #f4f3e4; }
+.rs-stat-dream { border-color: #d9d2e9; background: #f4f2f8; }
 
 .rs-stat-kicker {
   display: block;
@@ -630,7 +630,7 @@
 }
 
 .rs-stat-pre strong { color: #c0503d; }
-.rs-stat-dream strong { color: #6b6629; }
+.rs-stat-dream strong { color: #674ea7; }
 
 .rs-stat p {
   margin: 0;
