@@ -8,62 +8,62 @@
     {
       "id": "g1-dex5",
       "src": "g1-dex5.png",
-      "size": 519550,
+      "size": 517924,
       "resolution": [
         1024,
         1024
       ],
       "rgba": true,
       "webp": "g1-dex5.webp",
-      "webp_bytes": 83432
+      "webp_bytes": 82842
     },
     {
       "id": "g1-sim-dex3",
       "src": "g1-sim-dex3.png",
-      "size": 519214,
+      "size": 517719,
       "resolution": [
         1024,
         1024
       ],
       "rgba": true,
       "webp": "g1-sim-dex3.webp",
-      "webp_bytes": 85068
+      "webp_bytes": 84758
     },
     {
       "id": "human-dex5",
       "src": "human-dex5.png",
-      "size": 466153,
+      "size": 465430,
       "resolution": [
         1024,
         1024
       ],
       "rgba": true,
       "webp": "human-dex5.webp",
-      "webp_bytes": 65562
+      "webp_bytes": 65334
     },
     {
       "id": "locoman-dex2",
       "src": "locoman-dex2.png",
-      "size": 456841,
+      "size": 456219,
       "resolution": [
         1024,
         1024
       ],
       "rgba": true,
       "webp": "locoman-dex2.webp",
-      "webp_bytes": 80204
+      "webp_bytes": 79956
     },
     {
       "id": "r1lite-gripper",
       "src": "r1lite-gripper.png",
-      "size": 538005,
+      "size": 537212,
       "resolution": [
         1024,
         1024
       ],
       "rgba": true,
       "webp": "r1lite-gripper.webp",
-      "webp_bytes": 92092
+      "webp_bytes": 91834
     },
     {
       "id": "xarm7-dex4",
@@ -94,5 +94,5 @@
     768,
     768
   ],
-  "delivery_total_bytes": 604546
+  "delivery_total_bytes": 602912
 }

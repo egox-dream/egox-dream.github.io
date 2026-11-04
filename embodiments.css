@@ -17,7 +17,7 @@
 .explorer-legend { display: flex; gap: 12px; }
 .explorer-legend span { display: inline-flex; align-items: center; gap: 5px; color: #76766e; font-size: 11px; }
 .explorer-legend i { display: block; width: 7px; height: 7px; border-radius: 50%; }
-.explorer-legend .ee-left { background: #8b5cf6; }
+.explorer-legend .ee-left { background: #817a30; }
 .explorer-legend .ee-right { background: #e76f28; }
 .embodiment-show-all, .explorer-view-controls button {
   appearance: none;
