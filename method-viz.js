@@ -358,6 +358,9 @@
         });
         kick();
       },
+      clear() {
+        live.splice(0).forEach((chip) => chip.node.remove());
+      },
       show(v) {
         visible = v;
         kick();
@@ -479,9 +482,9 @@
       .observe(figure);
   }
 
-  // A sweep through the bodies, one every SWEEP_MS, ending on done().
+  // A sweep through the bodies, one every ms, ending on done().
   const SWEEP_MS = 800;
-  function sweeper() {
+  function sweeper(ms = SWEEP_MS) {
     let timer = 0;
     return {
       run(each, done) {
@@ -496,7 +499,7 @@
             clearInterval(timer);
             done();
           }
-        }, SWEEP_MS);
+        }, ms);
       },
       stop() {
         clearInterval(timer);
@@ -815,11 +818,14 @@
     const MOD_TOP = CARD_Y + 6, MOD_BOTTOM = CARD_Y + 6 + MOD_H;
     const GROUND = 470, NAME_Y = 518, NOTE_Y = 532;
     const HINT = 'Select a body or an action modality to trace its experts.';
+    // Each sweep stop must outlast its tokens' trip (stagger + link + curve + lane in setFlows), so they reach the
+    // body's experts before the sweep moves on.
+    const STOP_MS = 1500;
     const STEPS = [
       { kind: 'all', ms: 5400,
         text: 'The shared trunk fuses each embodiment\'s tokens into action tokens, and every embodiment decodes them ' +
               'with its own action experts.' },
-      { kind: 'sweep', ms: 6200,
+      { kind: 'sweep', ms: BODIES.length * STOP_MS + 700,
         text: 'Each embodiment decodes every action modality with its own expert: one for Z1-Tool, six for each G1.' },
       { kind: 'act', act: 'wristR', ms: 4600,
         text: 'Right-wrist targets in ℱ<sub>ego</sub> come from seven experts, one per embodiment; a single-arm ' +
@@ -976,12 +982,14 @@
     });
 
     let state = { kind: 'none' };
-    const sweep = sweeper();
+    const sweep = sweeper(STOP_MS);
     const tour = makeTour(figure, STEPS, {
       enter(s) {
         if (s.kind === 'sweep') {
-          sweep.run((b) => apply({ kind: 'body', body: b.key, tour: true, quiet: true }),
-            () => apply({ kind: 'all', tour: true }));
+          sweep.run((b) => {
+            chips.clear();
+            apply({ kind: 'body', body: b.key, tour: true, sweep: true });
+          }, () => apply({ kind: 'all', tour: true }));
         } else {
           apply({ kind: s.kind, act: s.act, body: s.body, tour: true });
         }
@@ -1030,7 +1038,7 @@
         toggle(segments[a.key].g, segmentOn(a.key, s));
         segments[a.key].g.setAttribute('aria-pressed', String(s.kind === 'act' && a.key === s.act && !s.tour));
       });
-      if (s.kind === 'body' && !s.quiet) {
+      if (s.kind === 'body' && !s.sweep) {
         showClip(BODY[s.body], true);
       } else if (wantPlay) {
         wantPlay = false;
@@ -1054,6 +1062,7 @@
     let lastGlow = 0;
     function setFlows(s) {
       const all = s.kind === 'all';
+      const [linkMs, curveMs, laneMs] = s.sweep ? [220, 700, 320] : [320, 1000, 460];
       const active = curves.filter((c) => curveOn(c, s) === true).map((c) => ({
         period: all ? 2600 : 1700,
         fire() {
@@ -1064,17 +1073,17 @@
             lastGlow = now;
             pulse(trunkGlow, [{ opacity: 0.28 }, { opacity: 0 }], 520);
           }
-          chips.launch(seg.link, 6, hue, 320, () => {
+          chips.launch(seg.link, 6, hue, linkMs, () => {
             pulse(seg.rect, [{ fillOpacity: 0.95 }, { fillOpacity: 0.55 }], 450);
-            chips.launch(c.path, 9, hue, 1000, () => {
+            chips.launch(c.path, 9, hue, curveMs, () => {
               pulse(c.it.modules[c.act], [{ transform: 'scale(1.35)' }, { transform: 'scale(1)' }], 360);
               const lane = c.it.lanes[c.act];
-              if (lane.classList.contains('is-on')) chips.launch(lane, 6, hue, 460);
+              if (lane.classList.contains('is-on')) chips.launch(lane, 6, hue, laneMs);
             });
           });
         },
       }));
-      chips.set(active, all ? (f) => Math.random() * f.period : null);
+      chips.set(active, all ? (f) => Math.random() * f.period : s.sweep ? (f, k) => 40 + k * 20 : null);
     }
 
     function select(s) {
