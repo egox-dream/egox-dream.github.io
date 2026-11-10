@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="results.css?v=20261030-2">
   <link rel="stylesheet" href="gallery.css?v=20261012-3">
   <link rel="stylesheet" href="embodiments.css?v=20261004-7">
+  <link rel="stylesheet" href="method-viz.css?v=20261109-4">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -24,6 +25,10 @@
     <ul>
       <li><a href="#abstract">Abstract</a></li>
       <li><a href="#method">Method</a></li>
+      <li class="toc-subsection"><a href="#method-frames">Egocentric frames</a></li>
+      <li class="toc-subsection"><a href="#method-inputs">Modular inputs</a></li>
+      <li class="toc-subsection"><a href="#method-outputs">Modular outputs</a></li>
+      <li class="toc-subsection"><a href="#method-dreaming">Dreaming objective</a></li>
       <li><a href="#embodiments">Embodiments &amp; Tasks</a></li>
       <li class="toc-subsection"><a href="#rollouts">Policy rollouts</a></li>
       <li><a href="#results">Results</a></li>
@@ -93,6 +98,78 @@
     <p class="figure-caption">
       <b>MXT+ Architecture and EgoX Embodiments.</b> <i>Top:</i> embodiment-specific modality tokenizers map each embodiment’s observations into tokens that a shared Transformer encoder-decoder trunk fuses across embodiments. Embodiment action experts decode the trunk output into embodiment-specific action chunks, while embodiment-dreaming experts predict future embodiment latents supervised by EMA copies of the corresponding modality tokenizers. <i>Bottom:</i> the embodiments used in EgoX. Each panel marks the unified egocentric frame ℱ<sub>ego</sub> and the end-effector-link keypoints.
     </p>
+
+    <section class="mv-block" id="method-frames" aria-labelledby="mv-frames-title">
+      <p class="mv-kicker"><span class="mv-num">01</span>Unified egocentric frames</p>
+      <h3 id="mv-frames-title">Unified egocentric frame system</h3>
+      <p class="mv-lead">EgoX expresses each pose modality in one of three frames shared by all embodiments: the root frame, the egocentric frame, and the wrist frames. A wrist pose therefore has the same meaning on the human and on every robot. Joint states remain in each embodiment's joint space.</p>
+      <figure class="mv-card mv-frames">
+        <div class="mv-toolbar">
+          <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
+            <svg class="mv-icon-pause" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9" rx="1"/><rect x="7" y="1.5" width="3" height="9" rx="1"/></svg>
+            <svg class="mv-icon-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.6v8.8L10.2 6z"/></svg>
+          </button>
+          <ol class="mv-steps" aria-label="Walkthrough steps"></ol>
+          <p class="mv-text">Select a frame or a body to see where its poses are expressed.</p>
+        </div>
+        <div class="mv-stage"></div>
+      </figure>
+      <p class="figure-caption mv-caption">Schematic of the three shared frames, each with x forward, y left, and z up. Each body is shown at the end of an action chunk; triads mark the frames, and the disc marks the ground projection that defines ℱ<sub>root</sub>.</p>
+    </section>
+
+    <section class="mv-block" id="method-inputs" aria-labelledby="mv-inputs-title">
+      <p class="mv-kicker"><span class="mv-num">02</span>Modular inputs</p>
+      <h3 id="mv-inputs-title">Many bodies, one modality vocabulary</h3>
+      <p class="mv-lead">Each embodiment encodes every modality with its own tokenizer. Poses are expressed in frames shared by all embodiments, so the shared trunk receives each modality with the same meaning from every embodiment that provides it.</p>
+      <figure class="mv-card mv-inputs">
+        <div class="mv-toolbar">
+          <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
+            <svg class="mv-icon-pause" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9" rx="1"/><rect x="7" y="1.5" width="3" height="9" rx="1"/></svg>
+            <svg class="mv-icon-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.6v8.8L10.2 6z"/></svg>
+          </button>
+          <ol class="mv-steps" aria-label="Walkthrough steps"></ol>
+          <p class="mv-text">Select a body or a modality to trace its tokens.</p>
+        </div>
+        <div class="mv-stage"></div>
+      </figure>
+      <p class="figure-caption mv-caption">Schematic of the MXT+ inputs, in the colors of the architecture figure above. Each colored square is one embodiment's tokenizer for one modality; each body is shown at the end of an action chunk.</p>
+    </section>
+
+    <section class="mv-block" id="method-outputs" aria-labelledby="mv-outputs-title">
+      <p class="mv-kicker"><span class="mv-num">03</span>Shared trunk, modular outputs</p>
+      <h3 id="mv-outputs-title">One shared trunk, an expert for each output</h3>
+      <p class="mv-lead">The shared trunk fuses the tokens of every embodiment. Each embodiment decodes the trunk output with its own action expert for each action modality it controls, so every body keeps its own control interface while the trunk is shared.</p>
+      <figure class="mv-card mv-outputs">
+        <div class="mv-toolbar">
+          <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
+            <svg class="mv-icon-pause" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9" rx="1"/><rect x="7" y="1.5" width="3" height="9" rx="1"/></svg>
+            <svg class="mv-icon-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.6v8.8L10.2 6z"/></svg>
+          </button>
+          <ol class="mv-steps" aria-label="Walkthrough steps"></ol>
+          <p class="mv-text">Select a body or an action modality to trace its experts.</p>
+        </div>
+        <div class="mv-stage"></div>
+      </figure>
+      <p class="figure-caption mv-caption">Schematic of the MXT+ outputs. Each dashed square is one embodiment's expert for one action modality, and its lane shows the part it drives. The clip shows the selected body at 1&times;: a policy rollout for each robot and a demonstration for the human.</p>
+    </section>
+
+    <section class="mv-block" id="method-dreaming" aria-labelledby="mv-dreaming-title">
+      <p class="mv-kicker"><span class="mv-num">04</span>Embodiment dreaming</p>
+      <h3 id="mv-dreaming-title">Dream in training, drop at deployment</h3>
+      <p class="mv-lead">Embodiment dreaming trains the shared trunk to predict the current embodiment's future latents, with targets from EMA copies of the policy's own tokenizers. It shapes the trunk during training and is removed at deployment.</p>
+      <figure class="mv-card mv-dreaming">
+        <div class="mv-toolbar">
+          <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
+            <svg class="mv-icon-pause" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9" rx="1"/><rect x="7" y="1.5" width="3" height="9" rx="1"/></svg>
+            <svg class="mv-icon-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.6v8.8L10.2 6z"/></svg>
+          </button>
+          <ol class="mv-steps" aria-label="Walkthrough steps"></ol>
+          <p class="mv-text">Switch between training and deployment, or pick an embodiment.</p>
+        </div>
+        <div class="mv-stage"></div>
+      </figure>
+      <p class="figure-caption mv-caption">Schematic of embodiment dreaming. Stacked squares are the eight latent tokens at each future offset <i>k</i>; dashed purple parts are used only during training.</p>
+    </section>
 
     <!-- ============ Embodiments ============ -->
     <div class="tagline" id="embodiments">Embodiments &amp; Tasks</div>
@@ -458,6 +535,7 @@
   <script src="./gallery.js?v=20261012-3" defer></script>
   <script src="./results.js?v=20261030-2" defer></script>
   <script src="./embodiments.js?v=20261004-6" defer></script>
+  <script src="./method-viz.js?v=20261109-6" defer></script>
 
 </body>
 </html>
