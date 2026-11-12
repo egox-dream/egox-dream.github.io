@@ -902,6 +902,14 @@ video.r2s-video-item {
   display: block;
 }
 
+.better-video-frame iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
 .better-video-frame .teaser-figure {
   border: 0;
   border-radius: 0;
