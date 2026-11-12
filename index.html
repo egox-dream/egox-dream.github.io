@@ -33,10 +33,10 @@
       <li class="toc-subsection"><a href="#rollouts">Policy rollouts</a></li>
       <li><a href="#results">Results</a></li>
       <li class="toc-subsection"><a href="#results-pretraining">Pretraining</a></li>
-      <li class="toc-subsection"><a href="#results-diversity">Embodiment diversity</a></li>
+      <li class="toc-subsection"><a href="#results-diversity">Pretraining composition</a></li>
       <li class="toc-subsection"><a href="#dreaming">Embodiment dreaming</a></li>
-      <li class="toc-subsection"><a href="#results-geometry">Latent geometry</a></li>
       <li class="toc-subsection"><a href="#results-modular">Modular design</a></li>
+      <li class="toc-subsection"><a href="#results-geometry">Latent geometry</a></li>
       <li><a href="#bibtex">BibTeX</a></li>
     </ul>
   </div>
@@ -78,32 +78,32 @@
       </div>
     </div>
     <p class="figure-caption">
-      <b>Overview of EgoX.</b> EgoX treats human, real-robot, and simulated demonstrations as unified egocentric trajectories, pretrains one shared manipulation representation, and fine-tunes it on a new embodiment&ndash;task domain. Its model, MXT+, routes each embodiment's observations through modality tokenizers into a shared Transformer trunk and decodes actions with embodiment-specific action experts, while a training-only dreaming expert predicts future embodiment latents. Embodiment dreaming and cross-embodiment pretraining both improve the average task progress score and success rate.
+      <b>Overview of EgoX.</b> EgoX learns from highly diverse embodiments, including humans, a humanoid, a wheeled bimanual robot, a quadruped, tabletop arms, and a simulated humanoid, with dexterous hands, grippers, and tools as end-effectors. It first pretrains on egocentric cross-embodiment data from humans and robots (top left), then fine-tunes on a new embodiment&ndash;task domain (bottom left). Its model, MXT+, routes each embodiment's observations through modality tokenizers into a shared Transformer trunk and decodes actions with embodiment-specific action experts, while a training-only dreaming expert predicts future embodiment latents (center). The resulting policies perform manipulation across embodiments and long-horizon loco-manipulation on a humanoid (right, top and middle). Embodiment dreaming and cross-embodiment pretraining both improve the average task progress score and success rate (right, bottom).
     </p>
 
     <!-- ============ Abstract ============ -->
     <div class="tagline" id="abstract">Abstract</div>
     <div class="paper-section">
-      Scaling robot manipulation requires learning from demonstrations collected across humans and heterogeneous robots. These sources cover diverse objects, scenes, tasks, and interaction strategies, but differences in morphology, sensing, and control interfaces make it difficult to learn effectively from their combined data. We introduce <strong>EgoX</strong>, an <em>egocentric cross-embodiment framework</em> for robot manipulation. Its central design is to share manipulation structure at the level of semantically corresponding modalities, while preserving embodiment-specific sensing and control interfaces. EgoX stores human, real-robot, and simulated demonstrations as unified egocentric observation-action trajectories, pretrains a Modularized Cross-Embodiment Transformer with Embodiment Dreaming (<strong>MXT+</strong>) on the mixture, and fine-tunes it on target-embodiment demonstrations. MXT+ pairs embodiment-specific modality tokenizers and action experts with a shared Transformer trunk, and its training-only <em>embodiment dreaming</em> objective predicts future embodiment latents from egocentric visual and proprioceptive features, so that the trunk captures each embodiment's dynamics. Across 13 task&ndash;embodiment pairs spanning five tasks and six robot embodiments, including a simulated humanoid, cross-embodiment pretraining raises average normalized task progress from 0.63 to 0.80 over training from scratch (0.53 to 0.77 out of distribution). Broader pretraining mixtures strengthen transfer, and embodiment dreaming further raises task progress from 0.63 to 0.78 across seven settings (0.56 to 0.74 out of distribution) and reduces mean cross-embodiment latent-geometry distance by 38.52%.
+      Generalist manipulation policies can benefit from the complementary experience of humans, real robots, and simulated agents. However, differences in morphology, sensing, and control interfaces make it difficult to learn effectively from their combined demonstrations. We introduce <strong>EgoX</strong>, an <em>egocentric cross-embodiment framework</em> that organizes heterogeneous demonstrations through semantically corresponding observation and action modalities while preserving embodiment-specific sensing and control interfaces. EgoX pretrains a Modularized Cross-Embodiment Transformer with Embodiment Dreaming (<strong>MXT+</strong>) on this mixture and fine-tunes it on target-embodiment demonstrations. Within each embodiment, MXT+ assigns a dedicated tokenizer to each observation modality and a dedicated expert to each action modality, with a Transformer trunk shared across embodiments. A training-only <em>embodiment-dreaming</em> objective predicts latent representations of future visual and proprioceptive states, encouraging the shared trunk to model each embodiment's dynamics. Across 13 task&ndash;embodiment pairs spanning five tasks and six robot embodiments, including five physical robots and one simulated humanoid, cross-embodiment pretraining raises MXT+'s average normalized task progress from 0.63 to 0.80 over training from scratch. The gains are particularly pronounced under out-of-distribution conditions, where average task progress increases from 0.53 to 0.77. Ablations demonstrate the benefits of broader pretraining mixtures, modular interfaces, and embodiment dreaming, with dreaming also producing more similar latent geometry across embodiments.
     </div>
 
     <!-- ============ Method ============ -->
     <div class="tagline" id="method">Method</div>
     <div class="paper-section">
-      EgoX has three stages: <strong>(i)</strong> collect human and robot demonstrations as unified egocentric observation-action trajectories organized by corresponding modality types, <strong>(ii)</strong> pretrain <strong>MXT+</strong> on mixed cross-embodiment data using action prediction and embodiment dreaming, and <strong>(iii)</strong> fine-tune the shared representation on target-embodiment tasks. Embodiment-specific modality tokenizers and action experts preserve heterogeneous sensing and control interfaces around a shared Transformer trunk. Dreaming experts predict future egocentric visual and proprioceptive latents during training and are discarded at deployment.
+      EgoX makes three key design decisions. <strong>(i)</strong> It organizes heterogeneous human, real-robot, and simulated demonstrations into a shared modality structure, with coordinate conventions chosen for each modality. <strong>(ii)</strong> Its model, <strong>MXT+</strong>, encodes each observation modality with an embodiment-specific tokenizer for a shared Transformer trunk and decodes the trunk output into each action modality with a modular action expert. <strong>(iii)</strong> The auxiliary <em>embodiment-dreaming</em> objective encourages the trunk to learn each embodiment's dynamics; the dreaming expert and its EMA teachers are used only during training. EgoX pretrains MXT+ on mixed cross-embodiment data and fine-tunes it on the target embodiment and task.
     </div>
 
     <figure class="paper-figure paper-figure-wide">
       <img src="./assets/figures/mxt-plus-architecture.png" alt="MXT+ architecture with embodiment-specific modality tokenizers, a shared Transformer trunk, action experts, and embodiment-dreaming experts, above the EgoX embodiments" loading="lazy" decoding="async">
     </figure>
     <p class="figure-caption">
-      <b>MXT+ Architecture and EgoX Embodiments.</b> <i>Top:</i> embodiment-specific modality tokenizers map each embodiment’s observations into tokens that a shared Transformer encoder-decoder trunk fuses across embodiments. Embodiment action experts decode the trunk output into embodiment-specific action chunks, while embodiment-dreaming experts predict future embodiment latents supervised by EMA copies of the corresponding modality tokenizers. <i>Bottom:</i> the embodiments used in EgoX. Each panel marks the unified egocentric frame ℱ<sub>ego</sub> and the end-effector-link keypoints.
+      <b>MXT+ Architecture and EgoX Embodiments.</b> <i>Top:</i> embodiment-specific modality tokenizers map each embodiment’s observations (egocentric images, embodiment-specific proprioception, and left/right wrist, left/right end-effector-link, and torso poses) into tokens that a shared Transformer encoder-decoder trunk fuses across embodiments. Embodiment action experts decode the trunk output into embodiment-specific action chunks, while embodiment-dreaming experts predict future embodiment latents supervised by EMA copies of the corresponding modality tokenizers. <i>Bottom:</i> the embodiments used in EgoX, from left to right: Human-Dex5, G1-Dex5, xArm7-Dex4, G1-Sim-Dex3, LocoMan-Dex2, R1Lite-Gripper, and Z1-Tool. Each panel marks the egocentric frame ℱ<sub>ego</sub> (on the body carrying the main camera, or on the arm base for the fixed-base xArm7-Dex4 and Z1-Tool), in which wrist poses and targets are expressed, and the wrist frames, in which end-effector-link poses are expressed. Left and right end-effectors are shown in olive and orange, matching the modality colors above, alongside a close-up of each end-effector and its end-effector-link keypoints.
     </p>
 
     <section class="mv-block" id="method-frames" aria-labelledby="mv-frames-title">
       <p class="mv-kicker"><span class="mv-num">01</span>Unified egocentric frames</p>
       <h3 id="mv-frames-title">Unified egocentric frame system</h3>
-      <p class="mv-lead">EgoX expresses each pose modality in a frame system shared by all embodiments: the root frame, the egocentric frame, and a wrist frame attached to each wrist. A wrist pose therefore has the same meaning on the human and on every robot. Joint states remain in each embodiment's joint space.</p>
+      <p class="mv-lead">EgoX uses common, modality-specific reference-frame conventions across embodiments: torso poses and velocity commands are expressed in the root frame, wrist poses and targets in the egocentric frame, and end-effector keypoint positions in the corresponding wrist frame. A wrist pose therefore has the same meaning on the human and on every robot, while joint states remain in each embodiment's joint space.</p>
       <figure class="mv-card mv-frames">
         <div class="mv-toolbar">
           <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
@@ -115,13 +115,13 @@
         </div>
         <div class="mv-stage"></div>
       </figure>
-      <p class="figure-caption mv-caption">Schematic of the three shared frames, each with x forward, y left, and z up. Each body is shown at the end of an action chunk; triads mark the frames, and the disc marks the ground projection that defines ℱ<sub>root</sub>.</p>
+      <p class="figure-caption mv-caption">Schematic of the root, egocentric, and wrist frames, each with x forward, y left, and z up. Each body is shown at the end of an action chunk; triads mark the frames, and the disc marks the ground projection that defines ℱ<sub>root</sub>.</p>
     </section>
 
     <section class="mv-block" id="method-inputs" aria-labelledby="mv-inputs-title">
       <p class="mv-kicker"><span class="mv-num">02</span>Modular inputs</p>
       <h3 id="mv-inputs-title">Many bodies, one modality vocabulary</h3>
-      <p class="mv-lead">Each embodiment encodes every modality with its own tokenizer. Poses are expressed in frames shared by all embodiments, so the shared trunk receives each modality with the same meaning from every embodiment that provides it.</p>
+      <p class="mv-lead">Within each embodiment, MXT+ assigns a dedicated tokenizer to each available observation modality. Because each pose modality follows the same frame convention on every embodiment, the shared trunk receives it with the same meaning from every embodiment that provides it.</p>
       <figure class="mv-card mv-inputs">
         <div class="mv-toolbar">
           <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
@@ -157,7 +157,7 @@
     <section class="mv-block" id="method-dreaming" aria-labelledby="mv-dreaming-title">
       <p class="mv-kicker"><span class="mv-num">04</span>Embodiment dreaming</p>
       <h3 id="mv-dreaming-title">Dream in training, drop at deployment</h3>
-      <p class="mv-lead">Embodiment dreaming trains the shared trunk to predict the current embodiment's future latents, with targets from EMA copies of the policy's own tokenizers. It shapes the trunk during training and is removed at deployment.</p>
+      <p class="mv-lead">Embodiment dreaming trains the shared trunk to predict the current embodiment's future latents, compact summaries of its future egocentric image and joint states, with targets from EMA copies of the policy's own feature encoders and embodiment tokenizer. The dreaming expert and EMA teachers shape the trunk during training and are removed at deployment.</p>
       <figure class="mv-card mv-dreaming">
         <div class="mv-toolbar">
           <button class="mv-play" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
@@ -175,7 +175,7 @@
     <!-- ============ Embodiments ============ -->
     <div class="tagline" id="embodiments">Embodiments &amp; Tasks</div>
     <div class="paper-section">
-      EgoX is evaluated on five manipulation tasks across six robot embodiments (five real robots and one simulated humanoid). Egocentric human demonstrations provide an additional pretraining embodiment.
+      EgoX is evaluated on 13 task&ndash;embodiment pairs spanning five manipulation tasks and six robot embodiments (five physical robots and one simulated humanoid). Egocentric human demonstrations provide an additional pretraining embodiment.
     </div>
 
     <section class="embodiment-explorer" aria-labelledby="explorer-heading">
@@ -432,54 +432,65 @@
     <!-- ============ Results ============ -->
     <div class="tagline" id="results">Results</div>
     <div class="paper-section">
-      We study five questions: <strong>(1)</strong> does egocentric cross-embodiment pretraining improve downstream manipulation over training from scratch, <strong>(2)</strong> how do the diversity and composition of pretraining embodiments affect performance, <strong>(3)</strong> does embodiment dreaming improve cross-embodiment transfer, <strong>(4)</strong> does latent geometry become more similar across embodiments, and <strong>(5)</strong> does modular design enhance cross-embodiment transfer? Evaluations cover ID and OOD settings using the normalized task progress score.
+      We study five questions: <strong>(1)</strong> does egocentric cross-embodiment pretraining improve downstream manipulation over training from scratch, <strong>(2)</strong> how does pretraining composition affect transfer, <strong>(3)</strong> does embodiment dreaming improve cross-embodiment learning, <strong>(4)</strong> does modular design enhance cross-embodiment transfer, and <strong>(5)</strong> how do cross-embodiment pretraining and embodiment dreaming affect latent geometry across embodiments? Each task&ndash;embodiment pair is evaluated under in-distribution (ID) and out-of-distribution (OOD) conditions, defined relative to that embodiment's target-task demonstrations, using the normalized task progress score.
     </div>
     <nav class="rs-nav" aria-label="Results by question">
       <a href="#results-pretraining"><span>1</span>Pretraining</a>
-      <a href="#results-diversity"><span>2</span>Embodiment diversity</a>
+      <a href="#results-diversity"><span>2</span>Pretraining composition</a>
       <a href="#dreaming"><span>3</span>Embodiment dreaming</a>
-      <a href="#results-geometry"><span>4</span>Latent geometry</a>
-      <a href="#results-modular"><span>5</span>Modular design</a>
+      <a href="#results-modular"><span>4</span>Modular design</a>
+      <a href="#results-geometry"><span>5</span>Latent geometry</a>
     </nav>
 
     <section class="rs-block" id="results-pretraining" aria-labelledby="results-pretraining-title">
       <div class="rs-head"><span class="rs-num">1</span><h3 id="results-pretraining-title">Does egocentric cross-embodiment pretraining outperform training from scratch?</h3></div>
-      <p class="rs-lead">We compare MXT+ with and without cross-embodiment pretraining against ACT and &pi;<sub>0.5</sub> on 13 task&ndash;embodiment pairs. Under ID evaluation, pretraining yields particularly large gains on G1-Dex5 Sort, LocoMan-Dex2 Scoop, and xArm7-Dex4 Scoop. The benefit becomes even more pronounced under OOD evaluation, with substantial improvements on G1-Dex5 Kitchen-Bread, G1-Dex5 Insert, and Z1-Tool Scoop.</p>
+      <p class="rs-lead">We compare MXT+ with and without cross-embodiment pretraining against ACT and &pi;<sub>0.5</sub> on 13 task&ndash;embodiment pairs. Pretraining raises MXT+'s mean normalized task progress from 0.63 to 0.80, pooling ID and OOD trials within each pair, with improvements on 11 of 13 pairs under ID evaluation and all 13 under OOD evaluation. The gains are particularly pronounced under OOD conditions, where mean task progress increases from 0.53 to 0.77, with large improvements on G1-Dex5 Insert and Z1-Tool Scoop. Among all evaluated methods, pretrained MXT+ achieves the highest average task progress and ranks first on 12 of the 13 pairs.</p>
       <figure class="rs-figure">
         <div class="rs-legend" id="mainLegend"></div>
         <div class="rs-main rs-anim" id="mainChart" role="img" aria-label="Normalized task progress score of ACT, pi 0.5, MXT+ without pretraining, and MXT+ with cross-embodiment pretraining under ID and OOD evaluation for 13 task-embodiment pairs"></div>
         <p class="rs-note">Normalized task progress score, mean &plusmn; SEM. Real robots: 20 trials per pair (13 ID, 7 OOD). Simulation: 50 trials per pair (32 ID, 18 OOD). Hover over a bar for its value.</p>
       </figure>
-      <p class="figure-caption"><b>Main Results.</b> Cross-embodiment-pretrained MXT+ generally improves task progress score across 13 task&ndash;embodiment pairs, with substantially larger gains under OOD evaluation.</p>
+      <p class="figure-caption"><b>Main Results.</b> Cross-embodiment pretraining improves MXT+ on 11 of 13 task&ndash;embodiment pairs under ID evaluation and on all 13 under OOD evaluation, where the gains are particularly pronounced.</p>
     </section>
 
     <section class="rs-block" id="results-diversity" aria-labelledby="results-diversity-title">
-      <div class="rs-head"><span class="rs-num">2</span><h3 id="results-diversity-title">Does pretraining benefit from embodiment diversity?</h3></div>
-      <p class="rs-lead">We vary the pretraining mixture: no pretraining, human-only, human plus other robots, and full cross-embodiment data, which also includes the target robot's demonstrations on other tasks. Every variant is fine-tuned on the same target-embodiment, target-task demonstrations.</p>
+      <div class="rs-head"><span class="rs-num">2</span><h3 id="results-diversity-title">How does pretraining composition affect transfer?</h3></div>
+      <p class="rs-lead">We compare four pretraining mixtures: no pretraining, human-only, human plus other robots, and full cross-embodiment pretraining, which further includes the target robot's demonstrations on non-target tasks. All variants use the same target-embodiment, target-task demonstrations for downstream training, on Sort for R1Lite-Gripper, Sort and Insert for G1-Dex5 and xArm7-Dex4, and Kitchen-Bread for G1-Sim-Dex3.</p>
       <figure class="rs-figure">
         <div class="rs-comp rs-anim" id="compositionChart"></div>
         <div class="rs-legend rs-legend-series" id="compositionLegend"></div>
         <p class="rs-note">Normalized task progress score for each pretraining mixture, mean &plusmn; SEM (shaded). ID and OOD use different y ranges. Each mixture adds to the previous one. Hover over a line or a legend entry to trace one setting.</p>
       </figure>
-      <p class="figure-caption"><b>Pretraining Data Composition.</b> Every pretraining mixture improves average OOD performance over no pretraining, and the gains grow as more embodiments are added. Full cross-embodiment pretraining performs best, improving the average task progress score by 0.12 in-distribution and 0.23 out-of-distribution, with OOD gains on all six task&ndash;embodiment pairs.</p>
+      <p class="figure-caption"><b>Pretraining Data Composition.</b> Every pretraining mixture improves average OOD performance over no pretraining, and the average gains grow as the mixture broadens. Human-only pretraining already improves OOD performance on five of six pairs, adding other robots raises ID performance on five of six pairs, and adding the target robot's other tasks improves OOD performance on every pair. Full cross-embodiment pretraining achieves the highest average task progress, improving over no pretraining by 0.12 on ID and 0.23 on OOD.</p>
     </section>
 
     <section class="rs-block" id="dreaming" aria-labelledby="dreaming-title">
       <div class="rs-head"><span class="rs-num">3</span><h3 id="dreaming-title">Does embodiment dreaming improve cross-embodiment learning?</h3></div>
-      <p class="rs-lead"><em>Embodiment dreaming</em> asks the shared trunk to predict future embodiment latents built from egocentric image features, robot joint configurations, and end-effector joint configurations. EMA copies of MXT+'s own modality encoders provide stable targets. The objective encourages embodiment-aware dynamics modeling during pretraining and fine-tuning; dreaming heads and EMA teachers are discarded at deployment.</p>
-      <p class="rs-lead">We compare MXT+ with MXT, its counterpart without the dreaming objective, on seven task&ndash;embodiment settings across five embodiments. The gains hold across tasks and embodiments, and are particularly pronounced on G1-Dex5.</p>
+      <p class="rs-lead"><em>Embodiment dreaming</em> asks the shared trunk to predict future embodiment latents built from egocentric image features, robot joint states, and end-effector joint states. EMA copies of MXT+'s feature encoders and embodiment tokenizer provide stable targets. The objective encourages embodiment-aware dynamics modeling during pretraining and fine-tuning; the dreaming expert and EMA teachers are discarded at deployment.</p>
+      <p class="rs-lead">We compare MXT+ with MXT, which removes the embodiment-dreaming components (the embodiment tokenizer, dreaming expert, and EMA teachers) during both pretraining and fine-tuning. MXT+ improves average task progress from 0.63 to 0.78 across seven task&ndash;embodiment settings spanning five embodiments, with gains in all seven settings and the largest on G1-Dex5 Scoop.</p>
       <figure class="rs-figure">
         <div class="rs-legend" id="dreamLegend"></div>
         <div class="rs-dream rs-anim" id="dreamChart" role="img" aria-label="Task progress score with and without embodiment dreaming for seven task-embodiment settings"></div>
         <div class="rs-hchart rs-dream-h rs-anim" id="dreamChartCompact" role="img" aria-label="Task progress score with and without embodiment dreaming for seven task-embodiment settings"></div>
         <p class="rs-note">Normalized task progress score pooled over ID and OOD trials, mean &plusmn; SEM.</p>
       </figure>
-      <p class="figure-caption"><b>Embodiment Dreaming.</b> The predictive objective improves task progress score across all seven reported task&ndash;embodiment settings while adding no deployment-time computation.</p>
+      <p class="figure-caption"><b>Embodiment Dreaming.</b> The embodiment-dreaming components improve task progress score in all seven reported task&ndash;embodiment settings, and deployment requires neither future-latent prediction nor EMA targets.</p>
+    </section>
+
+    <section class="rs-block" id="results-modular" aria-labelledby="results-modular-title">
+      <div class="rs-head"><span class="rs-num">4</span><h3 id="results-modular-title">Does modular design enhance cross-embodiment transfer?</h3></div>
+      <p class="rs-lead">We compare MXT+ with a coarse variant that uses one tokenizer for all camera views, one for concatenated pose and proprioceptive streams, and one action expert for all action modalities within each embodiment, keeping the image encoders, shared trunk, embodiment dreaming, training objective, and token budgets unchanged. After pretraining, modular MXT+ matches or exceeds the coarse variant in every ID and OOD setting. Both variants benefit from pretraining on Z1-Tool, but pretraining reduces the coarse variant's performance on xArm7-Dex4 Scoop and both simulated kitchen tasks, whereas modular MXT+ improves in most settings and avoids these large drops.</p>
+      <figure class="rs-figure">
+        <div class="rs-legend" id="coarseLegend"></div>
+        <div class="rs-coarse rs-anim" id="coarseChart" role="img" aria-label="ID and OOD task progress score of modular MXT+ and its coarse variant, without and with pretraining, on Z1-Tool Scoop, xArm7-Dex4 Scoop, and G1-Sim-Dex3 Kitchen-Bread and Kitchen-Cleanup"></div>
+        <p class="rs-note">Normalized task progress score. Arrows go from w/o to w/ pretraining, with the change above each column; violins show each mean's uncertainty (from its SEM). Hover over a marker for its value.</p>
+      </figure>
+      <p class="figure-caption"><b>Modular Design.</b> After pretraining, the gap between modular and coarse policies is small on Z1-Tool but substantially larger on xArm7-Dex4 and G1-Sim-Dex3, which involve richer observation and action modalities. On Kitchen-Cleanup, which starts with locomotion and therefore depends on a 3D velocity command within G1-Sim-Dex3's 51-dimensional action space, the pretrained coarse variant scores zero.</p>
     </section>
 
     <section class="rs-block" id="results-geometry" aria-labelledby="results-geometry-title">
-      <div class="rs-head"><span class="rs-num">4</span><h3 id="results-geometry-title">Does latent geometry become more similar across embodiments?</h3></div>
-      <p class="rs-lead">We compute Gromov&ndash;Wasserstein (GW) distances between embodiment-specific distributions of shared-trunk latents extracted from Scoop demonstrations, and report the percentage change in GW for each embodiment pair. Negative values indicate greater geometric similarity.</p>
+      <div class="rs-head"><span class="rs-num">5</span><h3 id="results-geometry-title">How do cross-embodiment pretraining and embodiment dreaming affect latent geometry across embodiments?</h3></div>
+      <p class="rs-lead">To assess pretraining, we compare MXT+ with and without cross-embodiment pretraining; to assess embodiment dreaming, we compare MXT+ with MXT, both pretrained and fine-tuned. For each comparison, we compute Gromov&ndash;Wasserstein (GW) distances between embodiment-specific distributions of shared-trunk latents extracted from Scoop demonstrations, mean-pooling the right wrist-pose tokens of the trunk output at each sampled time step into one 512-dimensional vector. Each cell shows the percentage change in GW for one embodiment pair; negative values indicate greater geometric similarity.</p>
       <figure class="rs-figure">
         <div class="rs-gw">
           <div class="rs-gw-matrix" id="latentChart" role="img" aria-label="Percentage change in Gromov-Wasserstein distance for each embodiment pair: pretraining in the lower triangle, embodiment dreaming in the upper triangle"></div>
@@ -487,28 +498,17 @@
             <div class="rs-stat rs-stat-pre">
               <span class="rs-stat-kicker">Pretraining &middot; lower triangle</span>
               <strong>&minus;21.30%</strong>
-              <p>mean GW across pairs, lower for <b>9 of 10</b> pairs. MXT+ with vs. without cross-embodiment pretraining.</p>
+              <p>change in mean GW over the 10 pairs, lower for <b>9 of 10</b> pairs. MXT+ with vs. without cross-embodiment pretraining.</p>
             </div>
             <div class="rs-stat rs-stat-dream">
               <span class="rs-stat-kicker">Embodiment dreaming &middot; upper triangle</span>
               <strong>&minus;38.52%</strong>
-              <p>mean GW across pairs, lower for <b>all 10</b> pairs. MXT+ vs. MXT, both pretrained and fine-tuned.</p>
+              <p>change in mean GW over the 10 pairs, lower for <b>all 10</b> pairs. MXT+ vs. MXT, both pretrained and fine-tuned.</p>
             </div>
           </div>
         </div>
       </figure>
       <p class="figure-caption"><b>Latent Geometry.</b> Pretraining and embodiment dreaming both make the internal distance structure of embodiment-specific latents more similar for the same manipulation task.</p>
-    </section>
-
-    <section class="rs-block" id="results-modular" aria-labelledby="results-modular-title">
-      <div class="rs-head"><span class="rs-num">5</span><h3 id="results-modular-title">Does modular design enhance cross-embodiment transfer?</h3></div>
-      <p class="rs-lead">We compare MXT+ with a coarse variant that merges modality-specific inputs and actions, each with and without cross-embodiment pretraining. The modular design consistently outperforms the coarse variant, with particularly pronounced gains on the higher-dimensional xArm7-Dex4 and G1-Sim-Dex3.</p>
-      <figure class="rs-figure">
-        <div class="rs-legend" id="coarseLegend"></div>
-        <div class="rs-coarse rs-anim" id="coarseChart" role="img" aria-label="ID and OOD task progress score of modular MXT+ and its coarse variant, without and with pretraining, on Z1-Tool Scoop, xArm7-Dex4 Scoop, and G1-Sim-Dex3 Kitchen-Bread and Kitchen-Cleanup"></div>
-        <p class="rs-note">Normalized task progress score. Arrows go from w/o to w/ pretraining, with the change above each column; violins show each mean's uncertainty (from its SEM). Hover over a marker for its value.</p>
-      </figure>
-      <p class="figure-caption"><b>Modular Design.</b> After pretraining, the coarse variant scores zero on Kitchen-Cleanup, whose first step requires a 3D velocity command for locomotion, a small but critical modality within G1's 51-dimensional action space.</p>
     </section>
 
     <!-- ============ Citation ============ -->
