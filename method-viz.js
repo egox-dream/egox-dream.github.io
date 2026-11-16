@@ -1120,7 +1120,7 @@
     const HINT = 'Switch between training and deployment, or pick an embodiment.';
     const STEPS = [
       { focus: 'predict', mode: 'train', ms: 5400,
-        text: 'In training, a dreaming expert reads the same trunk output as the action experts and predicts future ' +
+        text: 'In training, a dream expert reads the same trunk output as the action experts and predicts future ' +
               'embodiment latents.' },
       { focus: 'target', mode: 'train', ms: 5400,
         text: 'EMA copies of the policy\'s own tokenizers encode the future image and joint states into eight target ' +
@@ -1132,7 +1132,7 @@
         text: 'Each body dreams from whichever of the image, robot joint states, and end-effector joint states it ' +
               'provides.' },
       { focus: null, mode: 'deploy', ms: 6000,
-        text: 'At deployment, the dreaming expert and EMA teachers are removed: the policy runs its tokenizers, trunk, ' +
+        text: 'At deployment, the dream expert and EMA teachers are removed: the policy runs its tokenizers, trunk, ' +
               'and action experts, with no dreaming computation.' },
     ];
 
@@ -1157,7 +1157,7 @@
     modeButtons.forEach((button) => button.addEventListener('click', () => select({ mode: button.dataset.mode })));
 
     const { svg, layers, lazy } = scaffold(figure, H,
-      'Embodiment dreaming: the policy path, the dreaming expert, its EMA targets from a future observation, and the loss',
+      'Embodiment dreaming: the policy path, the dream expert, its EMA targets from a future observation, and the loss',
       ['wires', 'boxes', 'figs', 'labels', 'chips', 'tags']);
     const chips = chipEngine(layers.chips);
     const zone = (part, train) => make('g', { class: `mv-dz${train ? ' mv-train' : ''}`, 'data-part': part }, layers.boxes);
@@ -1222,7 +1222,7 @@
 
     // The training-only branch: dreaming expert, predicted and target latents, loss, EMA teacher, future body.
     const gDream = zone('predict', true);
-    text(gDream, DREAM.x, DREAM.y - 12, 'mv-box-title', 'Dreaming expert');
+    text(gDream, DREAM.x, DREAM.y - 12, 'mv-box-title', 'Dream expert');
     make('rect', { class: 'mv-dream-box', x: DREAM.x, y: DREAM.y, width: DREAM.w, height: DREAM.h, rx: 8 }, gDream);
     symbol(gDream, DREAM.x + DREAM.w / 2, ROW + 5, 'mv-sym', 'ψ', 'dream', 'e', 'middle');
     const latents = (parent, x0, y0, cls) => {
@@ -1377,7 +1377,7 @@
       const b = BODY[s.body];
       if (s.mode === 'deploy') {
         return `<b>Deployment</b>: ${b.name} runs its ${plural(b.mods.length, 'tokenizer')}, the shared trunk, and ` +
-          `its ${plural(b.acts.length, 'action expert')}; the dreaming expert and EMA teachers are removed.`;
+          `its ${plural(b.acts.length, 'action expert')}; the dream expert and EMA teachers are removed.`;
       }
       return `<b>${b.name}</b> dreams from ${listing(b.dream.map((d) => d[1]))}, encoded by EMA teachers into ` +
         'eight target tokens at future offsets.';
