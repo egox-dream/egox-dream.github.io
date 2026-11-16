@@ -947,7 +947,7 @@
       wantPlay = play;
       titleEl.textContent = `${b.name} · ${b.clip.task}`;
       subEl.textContent = b.clip.demo ? 'Human demonstration, 1×' :
-        'MXT+ with cross-embodiment pretraining, ID rollout, 1×';
+        'MED with cross-embodiment pretraining, ID rollout, 1×';
       expertList.replaceChildren(...b.acts.map((key) => {
         const li = document.createElement('li');
         li.textContent = ACT[key].label;

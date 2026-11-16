@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     human: ['Human-Dex5', 'Egocentric human data collection', './assets/embodiments/human.jpg']
   };
   const tasks = {'kitchen-bread': 'Kitchen-Bread', insert: 'Insert', 'kitchen-cleanup': 'Kitchen-Cleanup', sort: 'Sort', scoop: 'Scoop'};
-  const models = {'cross-embodiment': 'MXT+ (w/ pretrain)', 'mxt-plus': 'MXT+ (w/o pretrain)', pi05: 'π0.5', act: 'ACT'};
+  const models = {'cross-embodiment': 'MED (w/ pretrain)', 'mxt-plus': 'MED (w/o pretrain)', pi05: 'π0.5', act: 'ACT'};
   // Keep in sync with the paper's dataset-composition figure; human counts combine all recording setups.
   const demos = {
     g1: {insert: 218, 'kitchen-bread': 210, sort: 142, scoop: 140},

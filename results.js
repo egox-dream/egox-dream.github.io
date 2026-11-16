@@ -65,16 +65,16 @@
   const MAIN_METHODS = [
     { key: 'act', label: 'ACT', color: '#eef1f5' },
     { key: 'pi05', label: '&pi;<sub>0.5</sub>', color: '#a3b1c2' },
-    { key: 'mxt_wo', label: 'MXT+ (w/o pretrain)', color: '#f9b1a5' },
-    { key: 'mxt_w', label: 'MXT+ (w/ pretrain)', color: '#ff806d' },
+    { key: 'mxt_wo', label: 'MED (w/o pretrain)', color: '#f9b1a5' },
+    { key: 'mxt_w', label: 'MED (w/ pretrain)', color: '#ff806d' },
   ];
   const DREAM_METHODS = [
-    { key: 'without', label: 'w/o embodiment dreaming (MXT)', color: '#c5caf8' },
-    { key: 'with', label: 'w/ embodiment dreaming (MXT+)', color: '#ff806d' },
+    { key: 'without', label: 'w/o embodiment dreaming (MXT-FG)', color: '#c5caf8' },
+    { key: 'with', label: 'w/ embodiment dreaming (MED)', color: '#ff806d' },
   ];
   const COARSE_VARIANTS = [  // colors without, then with pretraining
-    { key: 'mxt', label: 'MXT+', colors: ['#f9b1a5', '#ff806d'] },
-    { key: 'coarse', label: 'MXT+ (coarse)', colors: ['#d9d9d9', '#9e9e9e'] },
+    { key: 'mxt', label: 'MED', colors: ['#f9b1a5', '#ff806d'] },
+    { key: 'coarse', label: 'MED (coarse)', colors: ['#d9d9d9', '#9e9e9e'] },
   ];
   const SPLITS = [
     { key: 'id', label: 'ID', marker: 'circle' },
